@@ -2,7 +2,7 @@ import React from 'react';
 
 const Wrapper = (props) => {
     return (
-        <div className="container py-3 border">
+        <div className="container py-4 mt-5">
             {props.children}
         </div>
     );

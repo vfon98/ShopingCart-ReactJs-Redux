@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { connect, useSelector } from "react-redux";
 
-const Navbar = () => {
+const Navbar = props => {
+  const cart = useSelector(state => state.cartReducer)
   return (
-    <nav className='navbar navbar-expand-sm bg-dark navbar-dark'>
+    <nav className='navbar navbar-expand-sm bg-dark navbar-dark fixed-top'>
       <div className='container'>
         <Link className='navbar-brand' to='/'>
           Shopping Now
@@ -17,9 +19,12 @@ const Navbar = () => {
             </Link>
           </li>
           <li className='nav-item'>
-            <a className='nav-link' href='/cart'>
+            <Link className='nav-link' to='/cart'>
               <i className='fa fa-lg fa-shopping-cart mr-2'></i>My cart
-            </a>
+              <span className='badge badge-pill badge-warning ml-1'>
+                {cart.totalItems}
+              </span>
+            </Link>
           </li>
           <li className='nav-item'>
             <Link className='nav-link' to='/login'>

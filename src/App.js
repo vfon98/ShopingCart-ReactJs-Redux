@@ -4,6 +4,8 @@ import Home from "./containers/Home/Home";
 import Wrapper from "./components/Wrapper";
 import LoginForm from "./containers/Form/LoginForm";
 import { Switch, Route } from "react-router-dom";
+import SignupForm from "./containers/Form/SignupForm";
+import Cart from "./containers/Cart/Cart";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Switch>
           <Route path='/' exact component={Home} />
           <Route path='/login' exact component={LoginForm} />
+          <Route path='/signup' exact component={SignupForm} />
+          <Route path='/cart' exact component={Cart} />
         </Switch>
       </Wrapper>
     </React.Fragment>

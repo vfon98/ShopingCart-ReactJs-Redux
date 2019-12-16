@@ -1,36 +1,40 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 import React from "react";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   return (
     <div>
-      <div class='row'>
-        <div class='col-sm-6 col-md-4 offset-md-4'>
-          <div class='card text-center'>
-            <div class='card-header'>
+      <div className='row'>
+        <div className='col-sm-6 col-md-4 offset-md-4'>
+          <div className='card text-center'>
+            <div className='card-header bg-success text-white'>
               <strong> Sign in to continue</strong>
             </div>
-            <div class='card-body'>
+            <div className='card-body'>
               <form role='form' action='#' method='POST'>
                 <fieldset>
-                  <div class='row'>
-                    <div class='mx-auto'>
+                  <div className='row'>
+                    <div className='mx-auto'>
                       <img
-                        class='mb-3 rounded-circle'
-                        src='https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120'
+                        className='mb-3 rounded-circle'
+                        // src='https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120'
+                        src='https://img.icons8.com/cute-clipart/100/000000/forgot-password.png'
                         alt=''
                       />
                     </div>
                   </div>
-                  <div class='row'>
-                    <div class='col-sm-12 col-md-10 offset-md-1 px-0'>
-                      <div class='form-group'>
-                        <div class='input-group'>
-                          <span class='input-group-prepend'>
-                            <span className="input-group-text"><i class='fa fa-user'></i></span>
+                  <div className='row'>
+                    <div className='col-sm-12 col-md-10 offset-md-1 px-0'>
+                      <div className='form-group'>
+                        <div className='input-group'>
+                          <span className='input-group-prepend'>
+                            <span className='input-group-text'>
+                              <i className='fa fa-user'></i>
+                            </span>
                           </span>
                           <input
-                            class='form-control'
+                            className='form-control'
                             placeholder='Username'
                             name='loginname'
                             type='text'
@@ -38,24 +42,25 @@ const LoginForm = () => {
                           />
                         </div>
                       </div>
-                      <div class='form-group'>
-                        <div class='input-group'>
-                          <span class='input-group-prepend'>
-                            <span className="input-group-text"><i class='fa fa-lock'></i></span>
+                      <div className='form-group'>
+                        <div className='input-group'>
+                          <span className='input-group-prepend'>
+                            <span className='input-group-text'>
+                              <i className='fa fa-lock'></i>
+                            </span>
                           </span>
                           <input
-                            class='form-control'
+                            className='form-control'
                             placeholder='Password'
                             name='password'
                             type='password'
-                            value=''
                           />
                         </div>
                       </div>
-                      <div class='form-group'>
+                      <div className='form-group'>
                         <input
                           type='submit'
-                          class='btn btn-lg btn-primary btn-block'
+                          className='btn btn-lg btn-primary btn-block'
                           value='Sign in'
                         />
                       </div>
@@ -64,11 +69,9 @@ const LoginForm = () => {
                 </fieldset>
               </form>
             </div>
-            <div class='card-footer'>
+            <div className='card-footer'>
               Don't have an account!&nbsp;
-              <a href='#' onClick=''>
-                Sign Up Here
-              </a>
+              <Link to='/signup'>Sign Up Here</Link>
             </div>
           </div>
         </div>

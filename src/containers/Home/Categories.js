@@ -1,21 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { changeSelectedCategory } from "../../actions";
 
 class Categories extends Component {
-  state = {
-    currentActiveId: 0
-  };
-
-  changeActive = id => {
-      this.setState({
-          currentActiveId: id
-      });
-  }
-
   render() {
-    const { categories } = this.props;
-    const activeId = this.state.currentActiveId;
+    const { currentSelected, categories } = this.props.categories;
 
     const categoriesList = categories.map(category => {
       // category entries: {id: number, name: string}
@@ -23,16 +13,24 @@ class Categories extends Component {
       return (
         <li className='nav-item' key={id}>
           <a
-            className={activeId === id ? "nav-link active" : "nav-link"}
+            className={
+              currentSelected.id === id ? "nav-link active" : "nav-link"
+            }
             href='#'
-            onClick={() => this.changeActive(id)}
+            onClick={() => this.props.changeSelected(id)}
           >
             {name}
           </a>
         </li>
       );
     });
-    return <ul className='nav nav-pills nav-justified'>{categoriesList}</ul>;
+
+    return (
+      <ul className='nav nav-pills nav-justified'>
+        <li className="nav-item"><a className="nav-link">Filter:</a></li>
+        {categoriesList}
+      </ul>
+    );
   }
 }
 
@@ -42,4 +40,10 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Categories);
+const mapDispatchToProps = dispatch => {
+  return {
+    changeSelected: id => dispatch(changeSelectedCategory(id))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);

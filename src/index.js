@@ -1,9 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./index.css";
+import "./index.scss";
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import App from "./App";
 import store from "./store/configureStore";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
