@@ -1,8 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAccount } from "../../actions";
 
-const LoginForm = () => {
+const LoginForm = props => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const isLogin = useSelector(state => state.userReducer.isLogin);
+  useEffect(() => {
+    if (isLogin && props.history.push("/cart"));
+  }, [isLogin]);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(loginAccount({ username, password }));
+  };
+
   return (
     <div>
       <div className='row'>
@@ -12,7 +28,12 @@ const LoginForm = () => {
               <strong> Sign in to continue</strong>
             </div>
             <div className='card-body'>
-              <form role='form' action='#' method='POST'>
+              <form
+                role='form'
+                action='#'
+                method='POST'
+                onSubmit={handleSubmit}
+              >
                 <fieldset>
                   <div className='row'>
                     <div className='mx-auto'>
@@ -20,7 +41,7 @@ const LoginForm = () => {
                         className='mb-3 rounded-circle'
                         // src='https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120'
                         src='https://img.icons8.com/cute-clipart/100/000000/forgot-password.png'
-                        alt=''
+                        alt='Missing'
                       />
                     </div>
                   </div>
@@ -38,6 +59,8 @@ const LoginForm = () => {
                             placeholder='Username'
                             name='loginname'
                             type='text'
+                            value={username}
+                            onChange={e => setUsername(e.target.value)}
                             autoFocus
                           />
                         </div>
@@ -54,8 +77,17 @@ const LoginForm = () => {
                             placeholder='Password'
                             name='password'
                             type='password'
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
                           />
                         </div>
+                        {isLogin === false ? (
+                          <div className='text-danger font-italic'>
+                            Wrong username or password!
+                          </div>
+                        ) : (
+                          ""
+                        )}
                       </div>
                       <div className='form-group'>
                         <input
@@ -70,7 +102,7 @@ const LoginForm = () => {
               </form>
             </div>
             <div className='card-footer'>
-              Don't have an account!&nbsp;
+              Don't have an account! <br />
               <Link to='/signup'>Sign Up Here</Link>
             </div>
           </div>

@@ -1,10 +1,19 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import "./cart.style.scss";
 import CartItem from "../../components/CartItem";
 
 class Cart extends Component {
   render() {
+    const { cart, totalPrice } = this.props.cart;
+    const cartItems = cart.map(item => {
+      return <CartItem {...item} key={item.id} />;
+    });
+    
+    if (!this.props.userInfo.isLogin) {
+      return <Redirect to='/login' />;
+    }
     return (
       <React.Fragment>
         <table id='cart' className='table table-hover table-striped'>
@@ -17,11 +26,7 @@ class Cart extends Component {
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
-            <CartItem />
-            <CartItem />
-            <CartItem />
-          </tbody>
+          <tbody>{cartItems}</tbody>
           <tfoot>
             <tr>
               <td>
@@ -30,14 +35,14 @@ class Cart extends Component {
                 </Link>
               </td>
               <td colSpan='2' className='text-center'>
-                <strong>Total $1.99</strong>
+                <strong>Total ${totalPrice.toLocaleString("en-EN")}</strong>
               </td>
               <td colSpan='2'>
                 <Link
                   to='/checkout'
                   className='btn btn-success btn-block text-white'
                 >
-                 <i className='fa fa-cart-arrow-down fa-lg mr-2'></i>Checkout
+                  <i className='fa fa-cart-arrow-down fa-lg mr-2'></i>Checkout
                 </Link>
               </td>
             </tr>
@@ -48,4 +53,12 @@ class Cart extends Component {
   }
 }
 
-export default Cart;
+const mapStateToProps = state => {
+  console.log("From mapState:", state.cartReducer);
+  return {
+    cart: state.cartReducer,
+    userInfo: state.userReducer
+  };
+};
+
+export default connect(mapStateToProps)(Cart);

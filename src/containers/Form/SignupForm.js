@@ -1,8 +1,20 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { registerAccount } from '../../actions';
 
-const SignupForm = () => {
+const SignupForm = (props) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      dispatch(registerAccount({username, password, address}));
+      props.history.push('/login');
+  }
   return (
     <div>
       <div className='row'>
@@ -12,14 +24,14 @@ const SignupForm = () => {
               <strong>First time with us? Sign up now!</strong>
             </div>
             <div className='card-body'>
-              <form role='form' action='#' method='POST'>
+              <form role='form' action='#' method='POST' onSubmit={handleSubmit}>
                 <fieldset>
                   <div className='row'>
                     <div className='mx-auto'>
                       <img
                         className='mb-3 rounded-circle'
                         src='https://img.icons8.com/bubbles/100/000000/user.png'
-                        alt=''
+                        alt='missing'
                       />
                     </div>
                   </div>
@@ -32,6 +44,8 @@ const SignupForm = () => {
                           placeholder='Ex: Vphong'
                           name='loginname'
                           type='text'
+                          value={username}
+                          onChange={e => setUsername(e.target.value)}
                           autoFocus
                         />
                       </div>
@@ -42,6 +56,8 @@ const SignupForm = () => {
                           placeholder='At least 4 characters'
                           name='password'
                           type='password'
+                          value={password}
+                          onChange={e => setPassword(e.target.value)}
                         />
                       </div>
                       <div className='form-group'>
@@ -50,7 +66,9 @@ const SignupForm = () => {
                           className='form-control'
                           placeholder='Ex: Can Tho, Vietnam'
                           name='password'
-                          type='password'
+                          type='text'
+                          value={address}
+                          onChange={e => setAddress(e.target.value)}
                         />
                       </div>
                       <div className='form-group'>

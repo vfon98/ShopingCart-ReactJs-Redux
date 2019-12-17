@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../actions";
 
-const OneProduct = ({ id, name, image, price }) => {
+const OneProduct = ({ id, name, image, price, category }) => {
   const dispatch = useDispatch();
   return (
     <div className='col-lg-3 col-md-4 col-sm-6 mb-4'>
@@ -29,7 +29,7 @@ const OneProduct = ({ id, name, image, price }) => {
           <button
             className='btn btn-success'
             onClick={() =>
-              dispatch(addToCart({ id, name, image, price, quantity: 1 }))
+              dispatch(addToCart({ id, name, image, price, category, quantity: 1 }))
             }
           >
             <i className='fa fa-cart-plus mr-2'></i>Add to cart
