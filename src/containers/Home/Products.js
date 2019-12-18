@@ -14,8 +14,9 @@ class Products extends PureComponent {
     // product: {id: number, name: string, image: string, price: number, created_at: string, category: string}
     const { isLoading, products } = this.props.products;
     const { currentSelected } = this.props.categories;
+    const { userID } = this.props.userInfo;
     let productsList = products.map(product => {
-      return <OneProduct {...product} key={product.id} />;
+      return <OneProduct {...product} userID={userID} key={product.id} />;
     });
     return (
       <div>
@@ -33,7 +34,8 @@ class Products extends PureComponent {
 const mapStateToProps = state => {
   return {
     products: state.productsReducer,
-    categories: state.categoriesReducer
+    categories: state.categoriesReducer,
+    userInfo: state.userReducer
   };
 };
 

@@ -25,7 +25,7 @@ const LoginForm = props => {
         <div className='col-sm-6 col-md-4 offset-md-4'>
           <div className='card text-center'>
             <div className='card-header bg-success text-white'>
-              <strong> Sign in to continue</strong>
+              <strong>You need to login first!</strong>
             </div>
             <div className='card-body'>
               <form

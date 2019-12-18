@@ -7,11 +7,11 @@ import CartItem from "../../components/CartItem";
 class Cart extends Component {
   render() {
     const { cart, totalPrice } = this.props.cart;
+    const { isLogin } = this.props.userInfo;
     const cartItems = cart.map(item => {
       return <CartItem {...item} key={item.id} />;
     });
-    
-    if (!this.props.userInfo.isLogin) {
+    if (!isLogin) {
       return <Redirect to='/login' />;
     }
     return (

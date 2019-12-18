@@ -7,11 +7,14 @@ import App from "./App";
 import store from "./store/configureStore";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+import { StripeProvider } from "react-stripe-elements";
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <App />
+      <StripeProvider apiKey='pk_test_QOOyeVrCYofsYsT36rGSO9Ij00IaJ3SQYt'>
+        <App />
+      </StripeProvider>
     </Router>
   </Provider>,
   document.getElementById("root")

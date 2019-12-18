@@ -50,6 +50,7 @@ const Navbar = props => {
               <i className='fa fa-lg fa-user mr-2'></i>My account
             </NavLink>
           </li>
+          {/* Logout button */}
           {userInfo.isLogin && (
             <li className='nav-item'>
               <a className='nav-link' onClick={handleLogout}>
