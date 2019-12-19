@@ -1,8 +1,8 @@
-import * as types from '../constants/actionTypes';
+import * as types from "../constants/actionTypes";
 
 const categories = [
   {
-    id: 0,
+    id: -1,
     name: "All"
   },
   {
@@ -30,22 +30,30 @@ const categories = [
     name: "Belt"
   }
 ];
+
 const initialState = {
   currentSelected: {
-    id: 0,
+    id: -1,
     name: "All"
   },
-  categories: categories
+  categories: [{ id: -1, name: "All" }]
 };
 
 const categoriesReducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.ASSIGN_CATEGORIES:
+      return {
+        ...state,
+        categories: [...initialState.categories, ...action.payload]
+      };
     case types.CHANGE_SELECTED_CATEGORY:
-      let currentSelected = state.categories.find(cate => cate.id === action.payload);
+      let currentSelected = state.categories.find(
+        cate => cate.id === action.payload
+      );
       return {
         ...state,
         currentSelected: currentSelected
-      } 
+      };
     default:
       return state;
   }

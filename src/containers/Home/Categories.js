@@ -1,9 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { changeSelectedCategory } from "../../actions";
+import { changeSelectedCategory, filterByCategory } from "../../actions";
 
-class Categories extends Component {
+class Categories extends PureComponent {
+  componentDidUpdate = () => {
+    const { currentSelected } = this.props.categories;
+    this.props.filterByCategory(currentSelected.name);
+  };
+
   render() {
     const { currentSelected, categories } = this.props.categories;
 
@@ -14,7 +20,7 @@ class Categories extends Component {
         <li className='nav-item' key={id}>
           <a
             className={
-              currentSelected.id === id ? "nav-link active" : "nav-link"
+              currentSelected.id === id ? "nav-link active" : "nav-link border"
             }
             href='#'
             onClick={() => this.props.changeSelected(id)}
@@ -26,8 +32,10 @@ class Categories extends Component {
     });
 
     return (
-      <ul className='nav nav-pills nav-justified'>
-        <li className="nav-item"><a className="nav-link">Filter:</a></li>
+      <ul className='nav nav-pills nav-justified' id='category-bar'>
+        <li className='nav-item'>
+          <a className='nav-link'>Tags:</a>
+        </li>
         {categoriesList}
       </ul>
     );
@@ -42,7 +50,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeSelected: id => dispatch(changeSelectedCategory(id))
+    changeSelected: id => dispatch(changeSelectedCategory(id)),
+    filterByCategory: category => dispatch(filterByCategory(category))
   };
 };
 

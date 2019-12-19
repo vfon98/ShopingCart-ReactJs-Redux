@@ -19,9 +19,8 @@ function App() {
   useEffect(() => {
     if (!userInfo.isLogin) {
       dispatch(checkLogin());
-    } else {
-      dispatch(fetchCartFromAPI(userInfo.userID));
     }
+    dispatch(fetchCartFromAPI(userInfo.userID));
   }, [userInfo.isLogin]);
 
   return (

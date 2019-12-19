@@ -15,13 +15,25 @@ const Navbar = props => {
     }
   };
   return (
-    <nav className='navbar navbar-expand-sm bg-dark navbar-dark fixed-top'>
-      <div className='container'>
+    <nav className='navbar navbar-expand-sm bg-dark navbar-dark fixed-top p-2 p-sm-0'>
+      <div className='container-fluid container-lg'>
         <Link className='navbar-brand' to='/'>
           Shopping Now
         </Link>
 
-        <ul className='navbar-nav'>
+        <button
+          className='navbar-toggler'
+          type='button'
+          data-toggle='collapse'
+          data-target='#collapsibleNavbar'
+        >
+          <span className='navbar-toggler-icon'></span>
+        </button>
+
+        <ul
+          className='navbar-nav collapse navbar-collapse d-sm-flex justify-content-sm-end'
+          id='collapsibleNavbar'
+        >
           <li className='nav-item'>
             <NavLink className='nav-link' exact activeClassName='active' to='/'>
               <i className='fa fa-lg fa-shopping-bag mr-2'></i>Shop
