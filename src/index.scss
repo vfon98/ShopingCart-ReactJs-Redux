@@ -1,0 +1,74 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.nav .nav-item {
+  color: #5733FF;
+  font-weight: 600;
+  .nav-link.active {
+    color: #fff;
+    background-color: #ff5733;
+  }
+  &:nth-child(1) {
+    color: #000;
+  }
+}
+
+.navbar {
+  padding: 0;
+  .navbar-nav .nav-item .nav-link {
+    padding: 15px;
+  }
+  .active {
+    border-bottom: 3px solid #ff5733;
+  }
+  a {
+    cursor: pointer;
+  }
+}
+
+.jumbotron img {
+  width: 60%;
+}
+
+.fa-star,
+.fa-star-o,
+.fa-star-half-o {
+  color: #ffd200;
+}
+
+.card-product {
+  width: 100%;
+  .card-img-top {
+    max-height: 160px;
+    width: auto;
+  }
+  &:hover {
+    transform: scale(1.01);
+  }
+}
+
+.card {
+  background-color: #F6F9FC;
+}
+
+#category-bar {
+  .nav-item {
+    margin: .1rem;
+  }
+}
+
+#collapsibleNavbar {
+  // display: flex;
+  // justify-content: flex-end;
+}

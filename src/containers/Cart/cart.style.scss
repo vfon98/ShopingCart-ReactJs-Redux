@@ -1,0 +1,22 @@
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  vertical-align: middle;
+}
+
+.table {
+  width: 100%;
+}
+.table > thead > tr {
+  @for $i from 2 through 5 {
+    th:nth-child(#{$i}) {
+      width: 6rem;
+      text-align: center;
+    }
+  }
+}
+
+.actions {
+  button {
+    margin: 0.1rem;
+  }
+}
