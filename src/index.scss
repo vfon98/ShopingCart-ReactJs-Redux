@@ -68,7 +68,11 @@ code {
   }
 }
 
-#collapsibleNavbar {
-  // display: flex;
-  // justify-content: flex-end;
+#not-found-page {
+  .fa.fa-frown-o {
+    font-size: 7rem;
+  }
+  h1 {
+    font-weight: 600;
+  }
 }

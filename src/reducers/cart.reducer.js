@@ -1,27 +1,9 @@
 import * as types from "../constants/actionTypes";
 
-const cart = [
-  //   {
-  //     id: -1,
-  //     name: "Example image",
-  //     image: "https://via.placeholder.com/250",
-  //     price: 500.01,
-  //     category: "Custom",
-  //     quantity: 1
-  //   },
-  //   {
-  //     id: -2,
-  //     name: "Example image 2",
-  //     image: "https://via.placeholder.com/250",
-  //     price: 20.5,
-  //     category: "Custom",
-  //     quantity: 2
-  //   }
-];
 const inintialState = {
   cart: [],
-  totalItems: getCartSize(cart),
-  totalPrice: getCartPrice(cart)
+  totalItems: 0,
+  totalPrice: 0
 };
 
 function getCartSize(cart) {
@@ -36,10 +18,21 @@ function getCartPrice(cart) {
 
 const cartReducer = (state = inintialState, action) => {
   let newCart = [];
+  let userID = null;
   switch (action.type) {
     case types.FETCH_CART_FROM_API:
-      let userID = action.payload.userID;
+      userID = action.payload.userID;
       // Because mockAPI doesn't have filter function
+      newCart = action.payload.cart.filter(item => item.userID === userID);
+      return {
+        ...state,
+        cart: newCart,
+        totalItems: getCartSize(newCart),
+        totalPrice: getCartPrice(newCart)
+      };
+
+    case types.GET_CART_FROM_STORAGE:
+      userID = action.payload.userID;
       newCart = action.payload.cart.filter(item => item.userID === userID);
       return {
         ...state,
@@ -58,6 +51,7 @@ const cartReducer = (state = inintialState, action) => {
       };
 
     case types.UPDATE_CART_ITEM:
+      // action.payload: cart's item object
       let desID = action.payload.id;
       let foundIndex = state.cart.findIndex(item => item.id === desID);
       newCart = [...state.cart];
@@ -69,6 +63,7 @@ const cartReducer = (state = inintialState, action) => {
       };
 
     case types.DELECT_CART_ITEM:
+      // action.payload: {id: number}
       newCart = state.cart.filter(item => {
         return item.id !== action.payload;
       });
@@ -87,7 +82,7 @@ const cartReducer = (state = inintialState, action) => {
         totalItems: 0,
         totalPrice: 0
       };
-      
+
     default:
       return state;
   }

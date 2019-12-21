@@ -1,17 +1,22 @@
 import React, { Component } from "react";
 import Categories from "./Categories";
 import Products from "./Products";
+import { connect } from "react-redux";
 
 class Home extends Component {
   render() {
     return (
       <div>
-        <Categories />
-        <hr/>
+        {!this.props.isLoading && <Categories />}
+        <hr />
         <Products />
       </div>
     );
   }
 }
 
-export default Home;
+const mapStateToProps = state => ({
+  isLoading: state.productsReducer.isLoading
+});
+
+export default connect(mapStateToProps)(Home);

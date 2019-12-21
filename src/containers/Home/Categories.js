@@ -3,30 +3,53 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { changeSelectedCategory, filterByCategory } from "../../actions";
+import { Link, withRouter } from "react-router-dom";
 
 class Categories extends PureComponent {
-  componentDidUpdate = () => {
-    const { currentSelected } = this.props.categories;
-    this.props.filterByCategory(currentSelected.name);
+  state = {
+    currentCategory: null
+  };
+
+  componentDidMount = () => {
+    const {
+      match: { params }
+    } = this.props;
+    this.setState({
+      currentCategory: params.category
+    });
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const {
+      match: { params },
+      categories: { currentSelected }
+    } = this.props;
+    if (prevProps.categories.currentSelected !== currentSelected) {
+      this.setState({
+        currentCategory: params.category
+      });
+    }
   };
 
   render() {
-    const { currentSelected, categories } = this.props.categories;
+    const { categories } = this.props.categories;
+    const { currentCategory } = this.state;
 
     const categoriesList = categories.map(category => {
       // category entries: {id: number, name: string}
       const { id, name } = category;
       return (
         <li className='nav-item' key={id}>
-          <a
+          <Link
             className={
-              currentSelected.id === id ? "nav-link active" : "nav-link border"
+              // Check active link
+              currentCategory === name ? "nav-link active" : "nav-link border"
             }
-            href='#'
+            to={`/products/${name}`}
             onClick={() => this.props.changeSelected(id)}
           >
             {name}
-          </a>
+          </Link>
         </li>
       );
     });
@@ -55,4 +78,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Categories));

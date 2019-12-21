@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { injectStripe, CardElement } from "react-stripe-elements";
 import { connect } from "react-redux";
 import { checkOutUser } from "../../actions";
+import { withRouter } from "react-router-dom";
 
 class Checkout extends Component {
   state = {
@@ -26,6 +27,7 @@ class Checkout extends Component {
           isPaid: true,
           isLoading: false
         });
+        // this.props.history.push("/");
       }
     });
   };
@@ -34,7 +36,7 @@ class Checkout extends Component {
     console.log(this.state.isLoading);
     const { userInfo, cart } = this.props;
     const { isLoading } = this.state;
-    // totalPric === 0 that means PAID
+    // totalPrice === 0 that means PAID
     const isPaid = this.state.isPaid || this.props.cart.totalPrice === 0;
     return (
       <div className='row'>
@@ -76,6 +78,7 @@ class Checkout extends Component {
               <hr />
               <label>Card information</label>
               <CardElement
+                hidePostalCode={true}
                 className='border p-2 rounded'
                 style={{ base: { fontSize: "18px" } }}
               />
@@ -124,5 +127,5 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default injectStripe(
-  connect(mapStateToProps, mapDispatchToProps)(Checkout)
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(Checkout))
 );

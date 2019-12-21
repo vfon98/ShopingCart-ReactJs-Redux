@@ -10,13 +10,14 @@ const OneProduct = ({ id, name, image, price, category, userID }) => {
   const isLogin = useSelector(state => state.userReducer.isLogin);
   const cart = useSelector(state => state.cartReducer.cart);
   const history = useHistory();
+  
   const handleAddToCart = () => {
     if (!isLogin) {
       history.push("/login");
       return;
     }
     cart.forEach(item => {
-      if (item.name === name) console.log("existed");
+      if (item.id === id) console.log("existed");
     });
     dispatch(
       addToCart({ id, name, image, price, category, quantity: 1, userID })
