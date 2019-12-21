@@ -25,16 +25,11 @@ function App() {
     dispatch(fetchCartFromAPI(userInfo.userID));
   }, [userInfo.isLogin]);
 
-  // useEffect(() => {
-    
-  // }, []);
-
   return (
     <React.Fragment>
       <Navbar />
       <Wrapper>
         <Switch>
-          {/* <Route path='/' exact component={Home} /> */}
           <Redirect exact from='/' to='/products/All' />
           <Redirect exact from='/products' to='/products/All' />
           

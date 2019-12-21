@@ -1,2 +1,1 @@
- - FIX WRONG PARAMS LOADING AT PRODUCTS
- - UPDATE LOCAL STORAGE WORK PROPERLY
+ - Change to use company's API (seekproducts)

@@ -1,11 +1,10 @@
-import axios from '../axios/axios.base'
-import * as types from '../constants/actionTypes'
-
+import axios from "../axios/axios.base";
+import * as types from "../constants/actionTypes";
 
 // Fetch all products from mock API
 export const fetchProducts = category => {
-  return dispatch => {
-    axios
+  return async dispatch => {
+    await axios
       .get("/products")
       .then(res => {
         dispatch({
@@ -16,12 +15,13 @@ export const fetchProducts = category => {
         dispatch({
           type: types.FILTER_BY_CATEGORY,
           payload: category
-        })
+        });
 
         dispatch({
           type: types.ASSIGN_CATEGORIES,
           payload: getCategoriesFromProductsList(res.data)
         });
+        return Promise.resolve();
       })
       .catch(err => console.log(err));
   };

@@ -78,6 +78,7 @@ export const checkOutUser = userID => {
     const { cart } = getState().cartReducer;
     cart.forEach(item => {
       dispatch(deleteCartItem(item.id));
+      console.log("DELETING ID", item.id)
     });
   };
 };

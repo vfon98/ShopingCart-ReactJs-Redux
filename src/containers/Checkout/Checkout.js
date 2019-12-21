@@ -33,7 +33,6 @@ class Checkout extends Component {
   };
 
   render() {
-    console.log(this.state.isLoading);
     const { userInfo, cart } = this.props;
     const { isLoading } = this.state;
     // totalPrice === 0 that means PAID
@@ -76,7 +75,7 @@ class Checkout extends Component {
                 />
               </div>
               <hr />
-              <label>Card information</label>
+              <label>Card information (4242424242424242)</label>
               <CardElement
                 hidePostalCode={true}
                 className='border p-2 rounded'

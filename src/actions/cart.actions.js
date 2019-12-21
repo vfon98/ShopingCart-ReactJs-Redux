@@ -1,5 +1,5 @@
-import axios from '../axios/axios.base';
-import * as types from '../constants/actionTypes'
+import axios from "../axios/axios.base";
+import * as types from "../constants/actionTypes";
 
 export const fetchCartFromAPI = userID => {
   return dispatch => {
@@ -46,6 +46,19 @@ export const addToCart = item => {
       type: types.ADD_TO_CART,
       payload: item
     });
+  };
+};
+
+export const addExistedItem = item => {
+  // Solution: dispatch to reducer first, then get the value from reducer and update in the API
+  return (dispatch, getState) => {
+    let itemID = item.id;
+    let currentItem = getState().cartReducer.cart.find(
+      item => item.id === itemID
+    );
+    
+    let newQuantity = currentItem.quantity + 1;
+    dispatch(udpateCartItem({ ...item, quantity: newQuantity }));
   };
 };
 

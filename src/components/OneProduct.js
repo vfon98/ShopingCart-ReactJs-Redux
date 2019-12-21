@@ -1,28 +1,42 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../actions";
+import { addToCart, addExistedItem } from "../actions";
 import { useHistory } from "react-router-dom";
 
-const OneProduct = ({ id, name, image, price, category, userID }) => {
+const OneProduct = props => {
+  const { id, name, image, price, category, userID } = props;
+
   const [hasError, setHasError] = useState(false);
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.userReducer.isLogin);
   const cart = useSelector(state => state.cartReducer.cart);
   const history = useHistory();
-  
+
+  const isAdded = () => {
+    return cart.find(item => item.name === name);
+  };
+
   const handleAddToCart = () => {
     if (!isLogin) {
       history.push("/login");
       return;
     }
-    cart.forEach(item => {
-      if (item.id === id) console.log("existed");
-    });
-    dispatch(
-      addToCart({ id, name, image, price, category, quantity: 1, userID })
-    );
+
+    // Check existed item
+    if (isExistedItem(props.id)) {
+      console.log("EXISTED");
+      dispatch(addExistedItem({ ...props}));
+    } else {
+      dispatch(addToCart({ ...props, quantity: 1 }));
+    }
   };
+
+  const isExistedItem = itemID => {
+    return cart.find(item => item.id === itemID);
+  };
+
   return (
     <div className='col-lg-3 col-md-4 col-sm-6 mb-4'>
       <div className='card card-product shadow'>
@@ -49,7 +63,10 @@ const OneProduct = ({ id, name, image, price, category, userID }) => {
             <i className='fa fa-star-half-o'></i>
           </p>
           <button className='btn btn-success' onClick={handleAddToCart}>
-            <i className='fa fa-cart-plus mr-2'></i>Add to cart
+            <i
+              className={"fa mr-2 " + (isAdded() ? "fa-check" : "fa-cart-plus")}
+            ></i>
+            Add to cart
           </button>
         </div>
       </div>

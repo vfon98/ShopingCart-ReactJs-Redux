@@ -48,9 +48,10 @@ code {
 }
 
 .card-product {
-  width: 100%;
   .card-img-top {
-    max-height: 160px;
+    object-fit: fill;
+    min-height: 10rem;
+    max-height: 12rem;
     width: auto;
   }
   &:hover {

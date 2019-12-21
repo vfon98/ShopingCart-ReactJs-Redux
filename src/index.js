@@ -9,6 +9,7 @@ import store from "./store/configureStore";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { StripeProvider } from "react-stripe-elements";
+import { updateCartInLocalStorage } from './actions/cart.actions'
 
 ReactDOM.render(
   <Provider store={store}>
@@ -20,6 +21,14 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
+
+store.subscribe(() => {
+  const userCart =(store.getState().cartReducer.cart);
+  const localCart = localStorage.getItem('user-cart');
+  if (JSON.stringify(userCart) !== localCart) {
+    updateCartInLocalStorage(userCart);
+  }
+})
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -51,7 +51,7 @@ const cartReducer = (state = inintialState, action) => {
       };
 
     case types.UPDATE_CART_ITEM:
-      // action.payload: cart's item object
+      console.log(action.payload)
       let desID = action.payload.id;
       let foundIndex = state.cart.findIndex(item => item.id === desID);
       newCart = [...state.cart];

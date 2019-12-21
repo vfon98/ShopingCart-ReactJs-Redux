@@ -35,7 +35,7 @@ const Navbar = props => {
           id='collapsibleNavbar'
         >
           <li className='nav-item'>
-            <NavLink className='nav-link' exact activeClassName='active' to='/'>
+            <NavLink className='nav-link' activeClassName='active' to='/products'>
               <i className='fa fa-lg fa-shopping-bag mr-2'></i>Shop
             </NavLink>
           </li>
@@ -64,7 +64,7 @@ const Navbar = props => {
           </li>
           {/* Logout button */}
           {userInfo.isLogin && (
-            <li className='nav-item'>
+            <li className='nav-item' title={userInfo.userID}>
               <a className='nav-link' onClick={handleLogout}>
                 <i className='fa fa-lg fa-power-off mr-2'></i>
                 {userInfo.username}

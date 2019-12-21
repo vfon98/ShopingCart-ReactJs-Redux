@@ -9,9 +9,14 @@ class Products extends PureComponent {
   componentDidMount() {
     console.log("FETCHING API");
     const {
-      match: { params }
+      match: { params },
+      history
     } = this.props;
-    this.props.fetchProducts(params.category);
+    this.props.fetchProducts(params.category).then(() => {
+      if (this.isCategoryNotFound(params.category)) {
+        history.push("/404");
+      }
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -24,6 +29,12 @@ class Products extends PureComponent {
       this.props.filterByCategory(params.category);
     }
   }
+
+  isCategoryNotFound = categoryName => {
+    const { categories } = this.props.categories;
+    // Check if is there any category matching
+    return !categories.find(category => category.name === categoryName);
+  };
 
   render() {
     // product: {id: number, name: string, image: string, price: number, created_at: string, category: string}
@@ -58,7 +69,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchProducts: (category) => dispatch(fetchProducts(category)),
+    fetchProducts: category => dispatch(fetchProducts(category)),
     filterByCategory: category => dispatch(filterByCategory(category))
   };
 };
