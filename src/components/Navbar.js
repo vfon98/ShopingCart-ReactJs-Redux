@@ -64,10 +64,10 @@ const Navbar = props => {
           </li>
           {/* Logout button */}
           {userInfo.isLogin && (
-            <li className='nav-item' title={userInfo.userID}>
+            <li className='nav-item' title={userInfo.id}>
               <a className='nav-link' onClick={handleLogout}>
                 <i className='fa fa-lg fa-power-off mr-2'></i>
-                {userInfo.username}
+                {userInfo.firstName}
               </a>
             </li>
           )}

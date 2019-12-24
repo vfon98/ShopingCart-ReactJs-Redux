@@ -1,3 +1,4 @@
+$danger: #dc3545; 
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -12,12 +13,21 @@ code {
     monospace;
 }
 
+.nav {
+  max-height: 8.5rem;
+  overflow-y: scroll;
+}
+
+// Category filter bar
 .nav .nav-item {
-  color: #5733FF;
+  color: #5733ff;
   font-weight: 600;
-  .nav-link.active {
+  .nav-link.active, .nav-link.active:hover {
     color: #fff;
     background-color: #ff5733;
+  }
+  .nav-link:hover {
+    background-color: lightgrey;
   }
   &:nth-child(1) {
     color: #000;
@@ -49,23 +59,24 @@ code {
 
 .card-product {
   .card-img-top {
-    object-fit: fill;
-    min-height: 10rem;
     max-height: 12rem;
-    width: auto;
   }
   &:hover {
     transform: scale(1.01);
   }
+  #product-name {
+    max-height: 4.6rem;
+    overflow: hidden;
+  }
 }
 
 .card {
-  background-color: #F6F9FC;
+  background-color: #f6f9fc;
 }
 
 #category-bar {
   .nav-item {
-    margin: .1rem;
+    margin: 0.1rem;
   }
 }
 
@@ -76,4 +87,9 @@ code {
   h1 {
     font-weight: 600;
   }
+}
+
+.error-input {
+  color: $danger;
+  font-size: 0.8rem;
 }

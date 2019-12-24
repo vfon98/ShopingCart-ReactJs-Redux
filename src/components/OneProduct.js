@@ -6,8 +6,6 @@ import { addToCart, addExistedItem } from "../actions";
 import { useHistory } from "react-router-dom";
 
 const OneProduct = props => {
-  const { id, name, image, price, category, userID } = props;
-
   const [hasError, setHasError] = useState(false);
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.userReducer.isLogin);
@@ -15,21 +13,21 @@ const OneProduct = props => {
   const history = useHistory();
 
   const isAdded = () => {
-    return cart.find(item => item.name === name);
+    return cart.find(item => item.name === props.name);
   };
 
   const handleAddToCart = () => {
-    if (!isLogin) {
-      history.push("/login");
-      return;
-    }
+    // if (!isLogin) {
+    //   history.push("/login");
+    //   return;
+    // }
 
     // Check existed item
     if (isExistedItem(props.id)) {
       console.log("EXISTED");
-      dispatch(addExistedItem({ ...props}));
+      dispatch(addExistedItem({ ...props }));
     } else {
-      dispatch(addToCart({ ...props, quantity: 1 }));
+      dispatch(addToCart({ ...props, quantity: 1, userID: -1 }));
     }
   };
 
@@ -37,31 +35,47 @@ const OneProduct = props => {
     return cart.find(item => item.id === itemID);
   };
 
+  // Redering rating stars
+  const RatingStars = rating => {
+    // Rounded to nearest 0.5
+    rating = Math.round(rating * 2) / 2;
+    let starIcons = [];
+    for (let i = 0; i < 5; i++) {
+      if (rating >= 1) starIcons.push(<i key={i} className='fa fa-star'></i>);
+      else if (rating === 0.5)
+        starIcons.push(<i key={i} className='fa fa-half-star-o'></i>);
+      else starIcons.push(<i key={i} className='fa fa-star-o'></i>);
+      rating--;
+    }
+    return starIcons;
+  };
+
   return (
     <div className='col-lg-3 col-md-4 col-sm-6 mb-4'>
       <div className='card card-product shadow'>
         <img
+          title={props.name}
           onError={() => setHasError(true)}
-          className='card-img-top'
+          className='card-img-top img-fluid border-bottom'
           //   src='https://via.placeholder.com/250'
           src={
-            !hasError ? image : "https://via.placeholder.com/150?text=missing"
+            !hasError && props.image
+              ? props.image
+              : "https://via.placeholder.com/250?text=placeholder"
           }
           alt='Missing image'
         />
         <div className='card-body'>
-          <h5 className='card-text font-weight-bold'>{name}</h5>
-          <p className='card-text font-weight-bolder text-secondary mb-1'>
-            Price: ${price}
+          <h5 className='card-text font-weight-bold' id='product-name'>
+            {props.name}
+          </h5>
+          <p className='card-text font-weight-bolder text-muted mb-1'>
+            ${props.price.toLocaleString("en-EN")}
           </p>
-          <p className='card-text mb-1'>{category}</p>
-          <p>
-            <i className='fa fa-star'></i>
-            <i className='fa fa-star'></i>
-            <i className='fa fa-star'></i>
-            <i className='fa fa-star'></i>
-            <i className='fa fa-star-half-o'></i>
+          <p className='card-text mb-1'>
+            {props.category.map(category => category.name).join(', ')}
           </p>
+          <p>{RatingStars(props.rating)}</p>
           <button className='btn btn-success' onClick={handleAddToCart}>
             <i
               className={"fa mr-2 " + (isAdded() ? "fa-check" : "fa-cart-plus")}

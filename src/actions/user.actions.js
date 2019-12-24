@@ -1,53 +1,20 @@
-import axios from '../axios/axios.base';
-import passwordHash from 'password-hash';
-import * as types from '../constants/actionTypes';
-import { deleteCartItem } from './cart.actions'
+import axios from "../axios/axios.base";
+import { USER_PROFILE } from "../api/endpoints";
+import * as types from "../constants/actionTypes";
+import { deleteCartItem } from "./cart.actions";
 
-export const registerAccount = account => {
-  let hashedPassword = passwordHash.generate(account.password);
-
+export const getUserProfile = token => {
   return dispatch => {
     axios
-      .post("/user-account", { ...account, password: hashedPassword })
+      .get(USER_PROFILE, { headers: { Authorization: `JWT ${token}` } })
       .then(res => {
-        console.log("Registering account");
+        console.log("USER", res);
+        dispatch({
+          type: types.GET_USER_PROFILE,
+          payload: { profile: res.data }
+        });
       })
-      .catch(err => {
-        console.log(err);
-      });
-    dispatch({
-      type: types.REGISTER_ACCOUNT
-    });
-  };
-};
-
-export const loginAccount = account => {
-  console.log(account);
-  return dispatch => {
-    axios
-      // Authenticate by get request. Stupid way but no choices
-      .get("/user-account", {
-        params: {
-          filter: account.username
-        }
-      })
-      .then(res => {
-        if (passwordHash.verify(account.password, res.data[0].password)) {
-          console.log("Login successfull");
-          let userInfo = { ...res.data[0], username: account.username };
-          delete userInfo.password;
-          sessionStorage.setItem("login-info", JSON.stringify(userInfo));
-          dispatch({
-            type: types.LOGIN_OK,
-            payload: userInfo
-          });
-        } else {
-          console.log("Login failed");
-          dispatch({
-            type: types.LOGIN_FAILED
-          });
-        }
-      });
+      .catch(console.log);
   };
 };
 
@@ -78,7 +45,7 @@ export const checkOutUser = userID => {
     const { cart } = getState().cartReducer;
     cart.forEach(item => {
       dispatch(deleteCartItem(item.id));
-      console.log("DELETING ID", item.id)
+      console.log("DELETING ID", item.id);
     });
   };
 };

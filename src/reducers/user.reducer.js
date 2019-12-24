@@ -2,31 +2,31 @@ import * as types from "../constants/actionTypes";
 
 const initialState = {
   isLogin: null,
-  userID: null,
+  id: null,
+  firstName: null,
+  lastName: null,
+  email: null,
   username: null,
-  address: null,
-  created_at: null
+  stripeID: null,
+  city: null
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.LOGIN_OK:
-      let userInfo = action.payload;
+    case types.GET_USER_PROFILE:
+      let profile = action.payload.profile;
       return {
+        ...state,
         isLogin: true,
-        userID: userInfo.id,
-        username: userInfo.username,
-        address: userInfo.address,
-        created_at: userInfo.created_at
-      };
-    case types.LOGIN_FAILED:
-      return {
-        isLogin: false
-      };
-    case types.LOGOUT:
-      return {
-          state: initialState
-      };
+        id: profile.id,
+        firstName: profile.first_name,
+        lastName: profile.last_name,
+        email: profile.email,
+        username: profile.username,
+        stripeID: profile.stripe_customer_id,
+        city: profile.city
+      }
+
     default:
       return state;
   }

@@ -17,7 +17,7 @@ export const fetchCartFromAPI = userID => {
   };
 };
 
-const getCartFromLocalStorage = userID => {
+export const getCartFromLocalStorage = userID => {
   let userCart = localStorage.getItem("user-cart");
   let payload = {
     userID: userID,
@@ -36,12 +36,13 @@ export const updateCartInLocalStorage = cart => {
 
 export const addToCart = item => {
   return dispatch => {
-    axios
-      .post("/user-cart", { ...item })
-      .then(res => {
-        console.log("Posting to API");
-      })
-      .catch(err => console.log(err));
+    console.log("From action:", item)
+    // axios
+    //   .post("/user-cart", { ...item })
+    //   .then(res => {
+    //     console.log("Posting to API");
+    //   })
+    //   .catch(err => console.log(err));
     dispatch({
       type: types.ADD_TO_CART,
       payload: item

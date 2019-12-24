@@ -3,44 +3,46 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginAccount } from "../../actions";
+import { login } from "../../actions/auth.actions";
+import axios from "../../axios/axios.base";
+import useInput from "./useInput";
 
 const LoginForm = props => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, bindUsername] = useInput("quocduby1238667@gmail.com");
+  const [password, bindPassword] = useInput("adward478");
+
   const dispatch = useDispatch();
-  const isLogin = useSelector(state => state.userReducer.isLogin);
-  
+  const auth = useSelector(state => state.authReducer);
+
   useEffect(() => {
-    if (isLogin && props.history.push("/cart"));
-  }, [isLogin]);
+    auth.isLogin && props.history.push("/cart");
+  }, [auth.isLogin]);
+
+  useEffect(() => {
+    console.log(auth.token);
+  }, [auth]);
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(loginAccount({ username, password }));
+    dispatch(login(username, password));
   };
 
   return (
     <div>
-      <div className='row'>
-        <div className='col-sm-6 col-md-4 offset-md-4'>
+      <div className='row justify-content-center'>
+        <div className='col-sm-5'>
+          <script>$(".alert").alert();</script>
           <div className='card text-center'>
             <div className='card-header bg-success text-white'>
               <strong>You need to login first!</strong>
             </div>
             <div className='card-body'>
-              <form
-                role='form'
-                action='#'
-                method='POST'
-                onSubmit={handleSubmit}
-              >
+              <form role='form' onSubmit={handleSubmit}>
                 <fieldset>
                   <div className='row'>
                     <div className='mx-auto'>
                       <img
                         className='mb-3 rounded-circle'
-                        // src='https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120'
                         src='https://img.icons8.com/cute-clipart/100/000000/forgot-password.png'
                         alt='Missing'
                       />
@@ -58,10 +60,8 @@ const LoginForm = props => {
                           <input
                             className='form-control'
                             placeholder='Username'
-                            name='loginname'
                             type='text'
-                            value={username}
-                            onChange={e => setUsername(e.target.value)}
+                            {...bindUsername}
                             autoFocus
                           />
                         </div>
@@ -76,19 +76,14 @@ const LoginForm = props => {
                           <input
                             className='form-control'
                             placeholder='Password'
-                            name='password'
                             type='password'
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
+                            {...bindPassword}
                           />
                         </div>
-                        {isLogin === false ? (
-                          <div className='text-danger font-italic'>
-                            Wrong username or password!
-                          </div>
-                        ) : (
-                          ""
-                        )}
+                        {/* LOGIN ERROR */}
+                        <div className='error-input'>
+                          {auth.loginError && auth.loginError.email}
+                        </div>
                       </div>
                       <div className='form-group'>
                         <input

@@ -8,7 +8,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import SignupForm from "./containers/Form/SignupForm";
 import Cart from "./containers/Cart/Cart";
 import UserInfo from "./components/UserInfo";
-import { checkLogin, fetchCartFromAPI } from "./actions";
+import { checkLogin, fetchCartFromAPI, getCartFromLocalStorage } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "react-stripe-elements";
 import Checkout from "./containers/Checkout/Checkout";
@@ -19,10 +19,13 @@ function App() {
   const dispatch = useDispatch();
   const userInfo = useSelector(state => state.userReducer);
   useEffect(() => {
-    if (!userInfo.isLogin) {
-      dispatch(checkLogin());
-    }
-    dispatch(fetchCartFromAPI(userInfo.userID));
+    dispatch(getCartFromLocalStorage(-1));
+  }, []);
+  useEffect(() => {
+    // if (!userInfo.isLogin) {
+    //   dispatch(checkLogin());
+    // }
+    // dispatch(fetchCartFromAPI(userInfo.userID));
   }, [userInfo.isLogin]);
 
   return (

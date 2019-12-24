@@ -8,15 +8,17 @@ import { withRouter } from "react-router-dom";
 class Products extends PureComponent {
   componentDidMount() {
     console.log("FETCHING API");
+    
     const {
       match: { params },
       history
     } = this.props;
-    this.props.fetchProducts(params.category).then(() => {
-      if (this.isCategoryNotFound(params.category)) {
-        history.push("/404");
-      }
-    });
+    this.props.fetchProducts(params.category);
+    // .then(() => {
+      // if (this.isCategoryNotFound(params.category)) {
+      //   history.push("/404");
+      // }
+    // });
   }
 
   componentDidUpdate(prevProps) {
@@ -26,7 +28,7 @@ class Products extends PureComponent {
     } = this.props;
     // Prevent infinite loops
     if (prevProps.categories.currentSelected !== categories.currentSelected) {
-      this.props.filterByCategory(params.category);
+      // this.props.filterByCategory(params.category);
     }
   }
 
@@ -43,7 +45,7 @@ class Products extends PureComponent {
     const { userID } = this.props.userInfo;
 
     let productsList = products.map(product => {
-      return <OneProduct {...product} userID={userID} key={product.id} />;
+      return <OneProduct {...product} /* userID={userID} */ key={product.id} />;
     });
 
     return (

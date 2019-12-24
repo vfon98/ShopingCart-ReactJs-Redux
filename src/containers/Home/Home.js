@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Categories from "./Categories";
 import Products from "./Products";
 import { connect } from "react-redux";
+import Pagination from "../../components/Pagination";
 
 class Home extends Component {
   render() {
@@ -10,6 +11,8 @@ class Home extends Component {
         {!this.props.isLoading && <Categories />}
         <hr />
         <Products />
+        <hr/>
+        <Pagination />
       </div>
     );
   }

@@ -10,7 +10,7 @@ const initialState = {
 
 const categoriesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.ASSIGN_CATEGORIES:
+    case types.FETCH_CATEGORIES:
       return {
         ...state,
         categories: [...initialState.categories, ...action.payload]

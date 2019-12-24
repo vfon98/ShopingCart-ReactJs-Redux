@@ -43,6 +43,7 @@ const cartReducer = (state = inintialState, action) => {
 
     case types.ADD_TO_CART:
       newCart = [...state.cart, action.payload];
+      console.log(newCart)
       return {
         ...state,
         cart: newCart,

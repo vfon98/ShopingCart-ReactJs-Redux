@@ -3,7 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import "./cart.style.scss";
 import CartItem from "../../components/CartItem";
-import { updateCartInLocalStorage } from '../../actions';
+import { updateCartInLocalStorage } from "../../actions";
 
 class Cart extends Component {
   // Update localStorage after cart changed
@@ -19,12 +19,12 @@ class Cart extends Component {
   render() {
     const { cart, totalPrice } = this.props.cart;
     const { isLogin } = this.props.userInfo;
+    // if (!isLogin) {
+    //   return <Redirect to='/login' />;
+    // }
     const cartItems = cart.map(item => {
       return <CartItem {...item} key={item.id} />;
     });
-    if (!isLogin) {
-      return <Redirect to='/login' />;
-    }
     return (
       <React.Fragment>
         <div className='table-responsive'>
@@ -68,6 +68,8 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log('mapStateToProps', state.cartReducer)
+  
   return {
     cart: state.cartReducer,
     userInfo: state.userReducer

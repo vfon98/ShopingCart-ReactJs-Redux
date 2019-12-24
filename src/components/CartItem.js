@@ -12,16 +12,16 @@ const CartItem = props => {
       <tr>
         <td data-th='Product'>
           <div className='row'>
-            <div className='col-lg-2 col-sm-4'>
+            <div className='col-lg-3 col-sm-4'>
               <img
                 src={props.image}
                 alt='Missing image'
                 className='img-fluid'
               />
             </div>
-            <div className='col-lg-10 col-sm-8'>
+            <div className='col-lg-9 col-sm-8'>
               <h5 className='font-weight-bolder'>{props.name}</h5>
-              <h6>Category: {props.category}</h6>
+              <h6>Category: {props.category.map(category => category.name).join(', ')}</h6>
             </div>
           </div>
         </td>
@@ -38,7 +38,7 @@ const CartItem = props => {
           />
         </td>
         <td data-th='Subtotal' className='text-center'>
-          ${(props.price * quantity).toLocaleString("en-EN")}
+          ${(props.price * props.quantity).toLocaleString("en-EN")}
         </td>
         <td className='actions text-center' data-th=''>
           <button
