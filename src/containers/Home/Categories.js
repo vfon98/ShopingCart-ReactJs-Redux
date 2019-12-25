@@ -11,7 +11,7 @@ class Categories extends PureComponent {
   };
 
   componentDidMount = () => {
-    this.props.fetchCategories();
+    // this.props.fetchCategories();
     const {
       match: { params }
     } = this.props;

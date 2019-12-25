@@ -18,14 +18,6 @@ export const getUserProfile = token => {
   };
 };
 
-export const logout = () => {
-  sessionStorage.getItem("login-info") &&
-    sessionStorage.removeItem("login-info");
-  return {
-    type: types.LOGOUT
-  };
-};
-
 export const checkLogin = () => {
   let userSession = sessionStorage.getItem("login-info");
   if (sessionStorage && userSession) {

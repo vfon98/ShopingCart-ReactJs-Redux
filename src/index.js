@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { StripeProvider } from "react-stripe-elements";
 import { updateCartInLocalStorage } from './actions/cart.actions'
+import { authUser } from "./actions/auth.actions";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -22,6 +23,7 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
+store.dispatch(authUser());
 store.subscribe(() => {
   const userCart =(store.getState().cartReducer.cart);
   const localCart = localStorage.getItem('user-cart');

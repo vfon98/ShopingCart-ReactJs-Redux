@@ -6,9 +6,10 @@ import userImage from "../assets/user.png";
 const UserInfo = props => {
   const cart = useSelector(state => state.cartReducer);
   const userInfo = useSelector(state => state.userReducer);
+  const auth = useSelector(state => state.authReducer);
   return (
     <React.Fragment>
-      {!userInfo.isLogin && <Redirect to='/login' />}
+      {!auth.isLogin && <Redirect to='/login' />}
 
       <div className='jumbotron'>
         <div className='row align-items-center'>

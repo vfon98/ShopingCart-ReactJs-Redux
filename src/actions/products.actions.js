@@ -27,16 +27,6 @@ export const fetchProducts = category => {
   };
 };
 
-const getCategoriesFromProductsList = productsList => {
-  let categoriesName = [];
-  productsList.forEach(product => categoriesName.push(product.category));
-  let uniqueCategoriesName = [...new Set(categoriesName)];
-  // Simple add id attribute for each element
-  return uniqueCategoriesName.map((name, index) => ({
-    id: index,
-    name: name
-  }));
-};
 
 export const filterByCategory = category => {
   return {

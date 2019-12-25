@@ -1,17 +1,21 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../actions";
+import { logout } from "../actions/auth.actions";
 
 const Navbar = props => {
   const cart = useSelector(state => state.cartReducer);
   const userInfo = useSelector(state => state.userReducer);
+  const auth = useSelector(state => state.authReducer);
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const handleLogout = () => {
-    if (confirm("Are you sure to logout")) {
-      dispatch(logout());
+    if (confirm("Are you sure to logout ?")) {
+      dispatch(logout(auth.token));
+      history.push("/login");
     }
   };
   return (
@@ -35,7 +39,11 @@ const Navbar = props => {
           id='collapsibleNavbar'
         >
           <li className='nav-item'>
-            <NavLink className='nav-link' activeClassName='active' to='/products'>
+            <NavLink
+              className='nav-link'
+              activeClassName='active'
+              to='/products'
+            >
               <i className='fa fa-lg fa-shopping-bag mr-2'></i>Shop
             </NavLink>
           </li>
@@ -63,7 +71,7 @@ const Navbar = props => {
             </NavLink>
           </li>
           {/* Logout button */}
-          {userInfo.isLogin && (
+          {auth.isLogin && (
             <li className='nav-item' title={userInfo.id}>
               <a className='nav-link' onClick={handleLogout}>
                 <i className='fa fa-lg fa-power-off mr-2'></i>

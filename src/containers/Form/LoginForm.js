@@ -1,15 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/auth.actions";
-import axios from "../../axios/axios.base";
 import useInput from "./useInput";
 
 const LoginForm = props => {
   const [username, bindUsername] = useInput("quocduby1238667@gmail.com");
-  const [password, bindPassword] = useInput("adward478");
+  const [password, bindPassword] = useInput("adward");
 
   const dispatch = useDispatch();
   const auth = useSelector(state => state.authReducer);
@@ -31,7 +30,6 @@ const LoginForm = props => {
     <div>
       <div className='row justify-content-center'>
         <div className='col-sm-5'>
-          <script>$(".alert").alert();</script>
           <div className='card text-center'>
             <div className='card-header bg-success text-white'>
               <strong>You need to login first!</strong>

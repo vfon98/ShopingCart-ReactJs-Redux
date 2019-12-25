@@ -18,10 +18,12 @@ class Cart extends Component {
 
   render() {
     const { cart, totalPrice } = this.props.cart;
-    const { isLogin } = this.props.userInfo;
-    // if (!isLogin) {
-    //   return <Redirect to='/login' />;
-    // }
+    const { isLogin } = this.props.auth;
+    console.log("IS LOGIN", this.props.auth.isLogin)
+
+    if (!isLogin) {
+      return <Redirect to='/login' />;
+    }
     const cartItems = cart.map(item => {
       return <CartItem {...item} key={item.id} />;
     });
@@ -68,11 +70,9 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('mapStateToProps', state.cartReducer)
-  
   return {
     cart: state.cartReducer,
-    userInfo: state.userReducer
+    auth: state.authReducer,
   };
 };
 
