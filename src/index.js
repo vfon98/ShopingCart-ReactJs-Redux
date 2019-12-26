@@ -12,10 +12,13 @@ import { StripeProvider } from "react-stripe-elements";
 import { updateCartInLocalStorage } from './actions/cart.actions'
 import { authUser } from "./actions/auth.actions";
 
+// eslint-disable-next-line no-unused-vars
+const PERSONAL_STRIPE_KEY = 'pk_test_QOOyeVrCYofsYsT36rGSO9Ij00IaJ3SQYt';
+const COMPANY_STRIPE_KEY = 'pk_test_7X4at47jVmUqka7N8HhdO35N';
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <StripeProvider apiKey='pk_test_QOOyeVrCYofsYsT36rGSO9Ij00IaJ3SQYt'>
+      <StripeProvider apiKey={COMPANY_STRIPE_KEY}>
         <App />
       </StripeProvider>
     </Router>

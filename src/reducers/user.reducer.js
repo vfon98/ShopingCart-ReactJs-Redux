@@ -12,7 +12,7 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   if (action.payload && action.payload.profile) {
-    // Transform data from API
+    // Transform data from API for shorter and reusable code
     var profile = action.payload.profile;
     var userProfile = {
       id: profile.id,

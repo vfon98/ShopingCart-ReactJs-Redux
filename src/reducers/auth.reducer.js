@@ -14,7 +14,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload.token,
-        isLogin: true,
+        isLogin: true
       };
 
     case types.REGISTER_OK:
@@ -43,10 +43,10 @@ const authReducer = (state = initialState, action) => {
       };
 
     case types.LOGOUT:
-      console.log("HERE IN AUTH");
-      return {
-        ...initialState
-      };
+      return { ...initialState };
+
+    case types.TOKEN_EXPIRED:
+      return { ...initialState };
 
     default:
       return state;

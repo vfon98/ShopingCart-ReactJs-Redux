@@ -19,7 +19,7 @@ export const authUser = () => {
       })
       .catch(err => {
         console.log(err);
-        dispatch({ types: types.TOKEN_EXPIRED });
+        dispatch({ type: types.TOKEN_EXPIRED });
       });
   };
 };

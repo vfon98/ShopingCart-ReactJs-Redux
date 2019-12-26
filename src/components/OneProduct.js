@@ -2,37 +2,23 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, addExistedItem } from "../actions";
+import { addToCart, addExistedItem } from "../actions/cart.actions";
 import { useHistory } from "react-router-dom";
 
 const OneProduct = props => {
   const [hasError, setHasError] = useState(false);
   const dispatch = useDispatch();
-  const isLogin = useSelector(state => state.userReducer.isLogin);
-  const cart = useSelector(state => state.cartReducer.cart);
+  const cart = useSelector(state => state.cartReducer);
+  const auth = useSelector(state => state.authReducer);
   const history = useHistory();
 
   const isAdded = () => {
-    return cart.find(item => item.name === props.name);
+    return cart.cart_detail.find(item => item.product.id === props.id);
   };
 
   const handleAddToCart = () => {
-    // if (!isLogin) {
-    //   history.push("/login");
-    //   return;
-    // }
-
-    // Check existed item
-    if (isExistedItem(props.id)) {
-      console.log("EXISTED");
-      dispatch(addExistedItem({ ...props }));
-    } else {
-      dispatch(addToCart({ ...props, quantity: 1, userID: -1 }));
-    }
-  };
-
-  const isExistedItem = itemID => {
-    return cart.find(item => item.id === itemID);
+    console.log("PRODUCT ID", props.id);
+    dispatch(addToCart(auth.token, props.id));
   };
 
   // Redering rating stars
@@ -73,7 +59,7 @@ const OneProduct = props => {
             ${props.price.toLocaleString("en-EN")}
           </p>
           <p className='card-text mb-1'>
-            {props.category.map(category => category.name).join(', ')}
+            {props.category.map(category => category.name).join(", ")}
           </p>
           <p>{RatingStars(props.rating)}</p>
           <button className='btn btn-success' onClick={handleAddToCart}>

@@ -3,29 +3,27 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import "./cart.style.scss";
 import CartItem from "../../components/CartItem";
-import { updateCartInLocalStorage } from "../../actions";
+import { clearCart } from "../../actions/cart.actions";
 
 class Cart extends Component {
   // Update localStorage after cart changed
   componentDidUpdate = () => {
-    const { cart } = this.props.cart;
-    const localCart = localStorage.getItem("user-cart");
-    if (JSON.stringify(cart) !== localCart && cart.length !== 0) {
-      updateCartInLocalStorage(cart);
-      console.log("Updated local storage");
-    }
+    // const { cart } = this.props.cart;
+    // const localCart = localStorage.getItem("user-cart");
+    // if (JSON.stringify(cart) !== localCart && cart.length !== 0) {
+    //   updateCartInLocalStorage(cart);
+    //   console.log("Updated local storage");
+    // }
   };
 
   render() {
-    const { cart, totalPrice } = this.props.cart;
-    const { isLogin } = this.props.auth;
-    console.log("IS LOGIN", this.props.auth.isLogin)
+    const { cart, auth } = this.props;
 
-    if (!isLogin) {
+    if (!auth.isLogin) {
       return <Redirect to='/login' />;
     }
-    const cartItems = cart.map(item => {
-      return <CartItem {...item} key={item.id} />;
+    const cartItems = cart.cart_detail.map(item => {
+      return <CartItem {...item} key={item.product.id} />;
     });
     return (
       <React.Fragment>
@@ -40,17 +38,31 @@ class Cart extends Component {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>{cartItems}</tbody>
+            <tbody>
+              {/* Check if cart is empty */}
+              {cartItems.length ? (
+                cartItems
+                ) : (
+                  <tr><td colSpan='5' className='text-center text-info h3'>Cart is empty !</td></tr>
+              )}
+            </tbody>
             <tfoot>
               <tr>
                 <td>
                   <Link to='/' className='btn btn-warning'>
-                    <i className='fa fa-angle-double-left'></i> Continue
-                    Shopping
+                    <i className='fa fa-angle-double-left fa-lg mr-1'></i>
+                    Continue Shopping
                   </Link>
+                  <button
+                    type='button'
+                    className='btn btn-danger m-1'
+                    onClick={() => this.props.clearCart(auth.token)}
+                  >
+                    <i className='fa fa-times fa-lg mr-1'></i>Clear cart
+                  </button>
                 </td>
                 <td colSpan='2' className='text-center'>
-                  <strong>Total ${totalPrice.toLocaleString("en-EN")}</strong>
+                  <strong>Total ${cart.total.toLocaleString("en-EN")}</strong>
                 </td>
                 <td colSpan='2'>
                   <Link
@@ -69,11 +81,13 @@ class Cart extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    cart: state.cartReducer,
-    auth: state.authReducer,
-  };
-};
+const mapStateToProps = state => ({
+  cart: state.cartReducer,
+  auth: state.authReducer
+});
 
-export default connect(mapStateToProps)(Cart);
+const mapDispatchToProps = dispatch => ({
+  clearCart: token => dispatch(clearCart(token))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

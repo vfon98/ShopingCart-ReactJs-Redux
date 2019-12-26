@@ -17,10 +17,6 @@ const LoginForm = props => {
     auth.isLogin && props.history.push("/cart");
   }, [auth.isLogin]);
 
-  useEffect(() => {
-    console.log(auth.token);
-  }, [auth]);
-
   const handleSubmit = e => {
     e.preventDefault();
     dispatch(login(username, password));

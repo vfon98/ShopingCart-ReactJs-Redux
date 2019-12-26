@@ -56,7 +56,7 @@ const Navbar = props => {
             >
               <i className='fa fa-lg fa-shopping-cart mr-2'></i>My cart
               <span className='badge badge-pill badge-warning ml-1'>
-                {cart.totalItems}
+                {cart.cart_detail.length || ''}
               </span>
             </NavLink>
           </li>

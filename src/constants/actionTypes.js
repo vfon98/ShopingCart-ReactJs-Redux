@@ -9,7 +9,11 @@ export const GET_CART_FROM_STORAGE = "GET_CART_FROM_STORAGE";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const ADD_EXISTED_ITEM = "ADD_EXISTED_ITEM";
 export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM";
-export const DELECT_CART_ITEM = "DELETE_CART_ITEM";
+export const DELETE_CART_ITEM = "DELETE_CART_ITEM";
+export const CLEAR_CART = "CLEAR_CART";
+export const CHECK_OUT_CART = "CHECK_OUT_CART";
+export const CHECK_OUT_OK = "CHECK_OUT_OK";
+export const CHECK_OUT_FAILED = "CHECK_OUT_FAILED";
 
 export const AUTH_USER = "AUTH_USER";
 export const TOKEN_EXPIRED = "TOKEN_EXPIRED";

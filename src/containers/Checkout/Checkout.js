@@ -3,29 +3,31 @@ import { injectStripe, CardElement } from "react-stripe-elements";
 import { connect } from "react-redux";
 import { checkOutUser } from "../../actions";
 import { withRouter } from "react-router-dom";
+import { checkoutCart } from "../../actions/cart.actions";
 
 class Checkout extends Component {
   state = {
-    isPaid: false,
     isLoading: null,
     errorMessage: ""
   };
 
-  submitCard = async () => {
-    const userInfo = this.props;
+  submitCard = (e) => {
+    const { userInfo, auth } = this.props;
     this.setState({ isLoading: true });
-    this.props.stripe.createToken({ name: userInfo.username }).then(payload => {
-      console.log("TOKEN", payload);
-      if (payload.error) {
+    this.props.stripe.createToken({ email: userInfo.email }).then(res => {
+      console.log("STRIPE TOKEN", res);
+      if (res.error) {
         this.setState({
-          errorMessage: payload.error.message,
+          errorMessage: res.error.message,
           isLoading: null
         });
       } else {
-        this.props.checkOutUser(userInfo.userID);
-        this.setState({
-          isPaid: true,
-          isLoading: false
+        // Stripe token received
+        this.props.checkoutCart(auth.token, res.token.id).then(() => {
+          console.log("CHECKED OUT")
+          this.setState({
+            isLoading: false
+          });
         });
         // this.props.history.push("/");
       }
@@ -36,7 +38,7 @@ class Checkout extends Component {
     const { userInfo, cart } = this.props;
     const { isLoading } = this.state;
     // totalPrice === 0 that means PAID
-    const isPaid = this.state.isPaid || this.props.cart.totalPrice === 0;
+    const isPaid = cart.paid_at; // || this.props.cart.total === 0;
     return (
       <div className='row'>
         <div className='offset-3 col-md-6'>
@@ -48,21 +50,25 @@ class Checkout extends Component {
             </div>
             <div className='card-body'>
               <div className='form-group'>
-                <label>Username</label>
+                <label>Customer</label>
                 <input
                   readOnly
                   type='text'
                   className='form-control'
-                  value={userInfo.username}
+                  value={
+                    userInfo.firstName
+                      ? userInfo.firstName + " " + userInfo.lastName
+                      : "Loading..."
+                  }
                 />
               </div>
               <div className='form-group'>
-                <label>Address</label>
+                <label>Email</label>
                 <input
                   readOnly
-                  type='text'
+                  type='email'
                   className='form-control'
-                  value={userInfo.address}
+                  value={userInfo.email}
                 />
               </div>
               <div className='form-group row'>
@@ -71,7 +77,7 @@ class Checkout extends Component {
                   readOnly
                   type='text'
                   className='col-md-9 form-control-plaintext font-weight-bold'
-                  value={"$" + cart.totalPrice.toLocaleString("en-EN")}
+                  value={"$" + cart.total.toLocaleString("en-EN")}
                 />
               </div>
               <hr />
@@ -89,7 +95,7 @@ class Checkout extends Component {
                 type='button'
                 className='btn btn-primary btn-lg btn-block mt-3'
                 onClick={this.submitCard}
-                disabled={isPaid}
+                disabled={isLoading || isPaid}
               >
                 <i
                   // Just animation... Forget it
@@ -102,7 +108,7 @@ class Checkout extends Component {
                       : "fa-shopping-cart")
                   }
                 ></i>
-                {isPaid ? "Paid" : "Checkout"}
+                {isPaid ? "Paid successfully !" : "Checkout"}
               </button>
             </div>
           </div>
@@ -115,13 +121,16 @@ class Checkout extends Component {
 const mapStateToProps = state => {
   return {
     userInfo: state.userReducer,
-    cart: state.cartReducer
+    cart: state.cartReducer,
+    auth: state.authReducer
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    checkOutUser: userID => dispatch(checkOutUser(userID))
+    checkOutUser: userID => dispatch(checkOutUser(userID)),
+    checkoutCart: (token, stripe_token) =>
+      dispatch(checkoutCart(token, stripe_token))
   };
 };
 

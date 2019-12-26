@@ -8,25 +8,25 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import SignupForm from "./containers/Form/SignupForm";
 import Cart from "./containers/Cart/Cart";
 import UserInfo from "./components/UserInfo";
-import { checkLogin, fetchCartFromAPI, getCartFromLocalStorage } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "react-stripe-elements";
 import Checkout from "./containers/Checkout/Checkout";
 import NotFound404 from "./components/NotFound404";
+import { fetchCart } from './actions/cart.actions'
 
 
 function App() {
   const dispatch = useDispatch();
-  const userInfo = useSelector(state => state.userReducer);
+  const auth = useSelector(state => state.authReducer);
   useEffect(() => {
-    dispatch(getCartFromLocalStorage(-1));
+    // dispatch(getCartFromLocalStorage(-1));
   }, []);
   useEffect(() => {
     // if (!userInfo.isLogin) {
     //   dispatch(checkLogin());
     // }
-    // dispatch(fetchCartFromAPI(userInfo.userID));
-  }, [userInfo.isLogin]);
+    auth.isLogin && dispatch(fetchCart(auth.token));
+  }, [auth.isLogin]);
 
   return (
     <React.Fragment>

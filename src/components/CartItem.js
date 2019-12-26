@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { udpateCartItem, deleteCartItem } from "../actions";
 
 const CartItem = props => {
-  const initialState = props.quantity;
+  const { product } = props;
+  const auth = useSelector(state => state.authReducer);
+  const initialState = props.amount;
   const [quantity, setQuantity] = useState(initialState);
   const dispatch = useDispatch();
   return (
@@ -12,21 +14,23 @@ const CartItem = props => {
       <tr>
         <td data-th='Product'>
           <div className='row'>
-            <div className='col-lg-3 col-sm-4'>
+            <div className='col-lg-2 col-md-3 col-sm-4 d-flex align-items-center'>
               <img
-                src={props.image}
+                src={product.image}
                 alt='Missing image'
-                className='img-fluid'
+                className='img-fluid rounded'
               />
             </div>
-            <div className='col-lg-9 col-sm-8'>
-              <h5 className='font-weight-bolder'>{props.name}</h5>
-              <h6>Category: {props.category.map(category => category.name).join(', ')}</h6>
+            <div className='col-lg-10 col-md-9 col-sm-8'>
+              <h5 className='font-weight-bolder' title={product.name}>
+                {product.name}
+              </h5>
+              <h6>Model: {product.model}</h6>
             </div>
           </div>
         </td>
         <td data-th='Price' className='text-center'>
-          ${props.price.toLocaleString("en-EN")}
+          ${product.price.toLocaleString("en-EN")}
         </td>
         <td data-th='Quantity' className='text-center'>
           <input
@@ -38,19 +42,23 @@ const CartItem = props => {
           />
         </td>
         <td data-th='Subtotal' className='text-center'>
-          ${(props.price * props.quantity).toLocaleString("en-EN")}
+          ${(product.price * quantity).toLocaleString("en-EN")}
         </td>
         <td className='actions text-center' data-th=''>
           <button
             className='btn btn-info btn-sm'
+            title='Update this item'
             // Use current quantity of CartItem
-            onClick={() => dispatch(udpateCartItem({ ...props, quantity }))}
+            onClick={() =>
+              dispatch(udpateCartItem(auth.token, product.id, quantity))
+            }
           >
             <i className='fa fa-refresh'></i>
           </button>
           <button
             className='btn btn-danger btn-sm'
-            onClick={() => dispatch(deleteCartItem(props.id))}
+            title='Delete this item'
+            onClick={() => dispatch(deleteCartItem(auth.token, product.id))}
           >
             <i className='fa fa-trash-o'></i>
           </button>
