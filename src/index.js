@@ -28,7 +28,7 @@ ReactDOM.render(
 
 store.dispatch(authUser());
 store.subscribe(() => {
-  const userCart =(store.getState().cartReducer.cart);
+  const userCart =(store.getState().cartReducer);
   const localCart = localStorage.getItem('user-cart');
   if (JSON.stringify(userCart) !== localCart) {
     updateCartInLocalStorage(userCart);

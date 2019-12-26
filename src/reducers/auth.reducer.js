@@ -2,7 +2,7 @@ import * as types from "../constants/actionTypes";
 
 const initialState = {
   token: null,
-  isLogin: false,
+  isLogin: null,
   regiterSuccess: null,
   registerError: null,
   loginError: null

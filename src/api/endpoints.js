@@ -1,6 +1,8 @@
 export const PRODUCTS_LIST    = '/api/products/list';
 export const CATEGORY_LIST    = '/api/category/list';
 
+export const SEARCH_CATEGORY  =  '/api/category/search/?order_by=-id';
+
 export const REGISTER         = '/api/auth/register';
 export const LOGIN            = '/user/login';
 export const LOGOUT           = '/user/logout';

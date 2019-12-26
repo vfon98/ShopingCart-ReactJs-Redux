@@ -17,6 +17,7 @@ const OneProduct = props => {
   };
 
   const handleAddToCart = () => {
+    !auth.isLogin && history.push('/login');
     console.log("PRODUCT ID", props.id);
     dispatch(addToCart(auth.token, props.id));
   };

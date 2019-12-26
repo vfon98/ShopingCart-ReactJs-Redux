@@ -122,7 +122,7 @@ const mapStateToProps = state => {
   return {
     userInfo: state.userReducer,
     cart: state.cartReducer,
-    auth: state.authReducer
+    auth: state.authReducer,
   };
 };
 

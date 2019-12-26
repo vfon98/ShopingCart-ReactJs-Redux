@@ -11,28 +11,23 @@ import {
 
 export const fetchCart = token => {
   return dispatch => {
+    // GET DATA FROM LOCAL STORAGE FIRST
+    dispatch({
+      type: types.FETCH_CART,
+      payload: { cart: getCartFromLocalStorage() }
+    });
+
+    getCartFromLocalStorage();
     axios
       .get(VIEW_CART, { headers: { Authorization: `JWT ${token}` } })
       .then(res => {
         dispatch({
-          type: types.FETCH_CART_FROM_API,
+          type: types.FETCH_CART,
           payload: { cart: res.data }
         });
+        updateCartInLocalStorage(res.data);
       })
       .catch(console.log);
-  };
-};
-
-export const getCartFromLocalStorage = userID => {
-  let userCart = localStorage.getItem("user-cart");
-  let payload = {
-    userID: userID,
-    // Return [] instead of null if userCart is not found
-    cart: JSON.parse(userCart) || []
-  };
-  return {
-    type: types.GET_CART_FROM_STORAGE,
-    payload: payload
   };
 };
 
@@ -54,19 +49,6 @@ export const addToCart = (token, productID) => {
   };
 };
 
-export const addExistedItem = item => {
-  // Solution: dispatch to reducer first, then get the value from reducer and update in the API
-  return (dispatch, getState) => {
-    let itemID = item.id;
-    let currentItem = getState().cartReducer.cart.find(
-      item => item.id === itemID
-    );
-
-    let newQuantity = currentItem.quantity + 1;
-    dispatch(udpateCartItem({ ...item, quantity: newQuantity }));
-  };
-};
-
 export const udpateCartItem = (token, productID, quantity) => {
   const data = { product: productID, amount: parseInt(quantity) };
   console.log(token, data);
@@ -74,7 +56,7 @@ export const udpateCartItem = (token, productID, quantity) => {
     axios
       .post(UPDATE_CART, data, { headers: { Authorization: `JWT ${token}` } })
       .then(res => {
-        console.log("Updating from API");
+        console.log("Updated from API");
         dispatch({
           type: types.UPDATE_CART_ITEM,
           payload: { cart: res.data }
@@ -120,20 +102,25 @@ export const checkoutCart = (token, stripe_token) => {
   // 1 mean recurring payment, 2 mean one one-time payment
   const data = { option: 2, token: stripe_token };
   return async dispatch => {
-    axios
+    await axios
       .post(CART_PAYMENT, data, { headers: { Authorization: `JWT ${token}` } })
       .then(res => {
         dispatch({ type: types.CHECK_OUT_OK });
         return Promise.resolve();
       })
       .catch(err => {
-        console.log({err});
+        console.log({ err });
         dispatch({ type: types.CHECK_OUT_FAILED });
         return Promise.reject(err);
       });
   };
 };
 
+export const getCartFromLocalStorage = () => {
+  // Return [] instead of null
+  return JSON.parse(localStorage.getItem("user-cart")) || [];
+};
+
 export const updateCartInLocalStorage = cart => {
-  localStorage.setItem("user-cart", JSON.stringify(cart));
+  localStorage.setItem('user-cart', JSON.stringify(cart))
 };

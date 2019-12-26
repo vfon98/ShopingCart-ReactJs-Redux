@@ -1,6 +1,6 @@
 import axios from "../axios/axios.base";
 import * as types from "../constants/actionTypes";
-import { PRODUCTS_LIST } from "../api/endpoints";
+import { PRODUCTS_LIST, SEARCH_CATEGORY } from "../api/endpoints";
 
 // Fetch all products from mock API
 export const fetchProducts = category => {
@@ -18,19 +18,28 @@ export const fetchProducts = category => {
           type: types.FETCH_PRODUCTS,
           payload: res.data.results
         });
-        // dispatch({
-        //   type: types.FILTER_BY_CATEGORY,
-        //   payload: category
-        // });
       })
       .catch(err => console.log(err));
   };
 };
 
 
-export const filterByCategory = category => {
-  return {
-    type: types.FILTER_BY_CATEGORY,
-    payload: category
-  };
+export const searchByCategory = (category) => {
+  const data = {
+    key_word: '',
+    category: category === 'All' ? '' : category,
+  } 
+  return (dispatch, getState) => {
+    const { pagination } = getState();
+    axios.post(SEARCH_CATEGORY, data, { params: {
+      page: 1,
+      page_size: pagination.pageSize
+    }}).then(res => {
+      console.log("PAGI", res.data)
+      dispatch({
+        type: types.FETCH_PRODUCTS,
+        payload: res.data.results
+      })
+    }).catch(console.log);
+  }
 };

@@ -31,13 +31,3 @@ export const checkLogin = () => {
     type: types.SESSION_NOT_FOUND
   };
 };
-
-export const checkOutUser = userID => {
-  return (dispatch, getState) => {
-    const { cart } = getState().cartReducer;
-    cart.forEach(item => {
-      dispatch(deleteCartItem(item.id));
-      console.log("DELETING ID", item.id);
-    });
-  };
-};

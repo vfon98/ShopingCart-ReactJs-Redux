@@ -18,8 +18,9 @@ export const authUser = () => {
         });
       })
       .catch(err => {
-        console.log(err);
+        console.log({err});
         dispatch({ type: types.TOKEN_EXPIRED });
+        removeTokenFromLocalStorage();
       });
   };
 };

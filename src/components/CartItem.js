@@ -6,8 +6,7 @@ import { udpateCartItem, deleteCartItem } from "../actions";
 const CartItem = props => {
   const { product } = props;
   const auth = useSelector(state => state.authReducer);
-  const initialState = props.amount;
-  const [quantity, setQuantity] = useState(initialState);
+  const [quantity, setQuantity] = useState(props.amount);
   const dispatch = useDispatch();
   return (
     <React.Fragment>
@@ -16,7 +15,7 @@ const CartItem = props => {
           <div className='row'>
             <div className='col-lg-2 col-md-3 col-sm-4 d-flex align-items-center'>
               <img
-                src={product.image}
+                src={product.image || 'https://via.placeholder.com/150'}
                 alt='Missing image'
                 className='img-fluid rounded'
               />
@@ -68,4 +67,4 @@ const CartItem = props => {
   );
 };
 
-export default CartItem;
+export default React.memo(CartItem);

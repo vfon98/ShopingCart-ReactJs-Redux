@@ -10,23 +10,11 @@ const inintialState = {
 };
 
 const cartReducer = (state = inintialState, action) => {
-  let newCart = [];
-  let userID = null;
   switch (action.type) {
-    case types.FETCH_CART_FROM_API:
+    case types.FETCH_CART:
       return {
         ...state,
         ...action.payload.cart
-      };
-
-    case types.GET_CART_FROM_STORAGE:
-      userID = action.payload.userID;
-      newCart = action.payload.cart.filter(item => item.userID === userID);
-      return {
-        ...state,
-        cart: newCart
-        // totalItems: getCartSize(newCart),
-        // totalPrice: getCartPrice(newCart)
       };
 
     case types.ADD_TO_CART:

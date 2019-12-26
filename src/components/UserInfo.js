@@ -37,10 +37,10 @@ const UserInfo = props => {
             </p>
             <p>
               <b>Total items in cart: </b>
-              {cart.totalItems}
+              {cart.cart_detail.length}
             </p>
             <p>
-              <b>Total cart price: </b>${cart.totalPrice}
+              <b>Total cart price: </b>${cart.total.toLocaleString('en-EN')}
             </p>
           </div>
         </div>
