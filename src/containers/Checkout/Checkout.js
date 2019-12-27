@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { injectStripe, CardElement } from "react-stripe-elements";
 import { connect } from "react-redux";
-import { checkOutUser } from "../../actions";
-import { withRouter } from "react-router-dom";
-import { checkoutCart } from "../../actions/cart.actions";
+  import { withRouter } from "react-router-dom";
+  import { checkoutCart } from "../../actions/cart.actions";
 
 class Checkout extends Component {
   state = {
@@ -128,7 +127,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    checkOutUser: userID => dispatch(checkOutUser(userID)),
     checkoutCart: (token, stripe_token) =>
       dispatch(checkoutCart(token, stripe_token))
   };

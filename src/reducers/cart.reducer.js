@@ -53,6 +53,9 @@ const cartReducer = (state = inintialState, action) => {
       return {
         ...state
       };
+    
+    case types.LOGOUT:
+      return inintialState;
 
     default:
       return state;

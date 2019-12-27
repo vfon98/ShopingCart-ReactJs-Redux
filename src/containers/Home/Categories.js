@@ -2,16 +2,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { fetchCategories, changeSelectedCategory, filterByCategory } from "../../actions";
+import {
+  fetchCategories,
+  changeSelectedCategory,
+} from "../../actions";
 import { Link, withRouter } from "react-router-dom";
 
 class Categories extends PureComponent {
   state = {
-    currentCategory: null
+    currentCategory: "All"
   };
 
   componentDidMount = () => {
-    // this.props.fetchCategories();
+    this.props.fetchCategories();
     const {
       match: { params }
     } = this.props;
@@ -19,16 +22,21 @@ class Categories extends PureComponent {
       currentCategory: params.category
     });
   };
-
-  componentDidUpdate = (prevProps, prevState) => {
+  
+  componentDidUpdate = (prevProps) => {
     const {
       match: { params },
-      categories: { currentSelected }
+      categories: { currentSelected },
+      categories
     } = this.props;
     if (prevProps.categories.currentSelected !== currentSelected) {
       this.setState({
         currentCategory: params.category
       });
+    }
+    
+    if (prevProps.categories.isLoading !== categories.isLoading) {
+      this.props.changeSelectedCategory(params.category)
     }
   };
 
@@ -40,14 +48,14 @@ class Categories extends PureComponent {
       // category entries: {id: number, name: string}
       const { id, name } = category;
       return (
-        <li className='nav-item text-nowrap' key={id}>
+        <li className="nav-item text-nowrap" key={id}>
           <Link
             className={
               // Check active link
               currentCategory === name ? "nav-link active" : "nav-link border"
             }
             to={`/products/${name}`}
-            onClick={() => this.props.changeSelected(id)}
+            onClick={() => this.props.changeSelectedCategory(name)}
           >
             {name}
           </Link>
@@ -56,12 +64,15 @@ class Categories extends PureComponent {
     });
 
     return (
-      <ul className='nav nav-pills nav-justified' id='category-bar'>
-        <li className='nav-item text-nowrap'>
-          <a className='nav-link'>Filter by:</a>
-        </li>
-        {categoriesList}
-      </ul>
+      // Not display until loading done
+      !this.props.categories.isLoading && (
+        <ul className="nav nav-pills nav-justified" id="category-bar">
+          <li className="nav-item text-nowrap">
+            <a className="nav-link">Filter by:</a>
+          </li>
+          {categoriesList}
+        </ul>
+      )
     );
   }
 }
@@ -74,9 +85,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeSelected: id => dispatch(changeSelectedCategory(id)),
+    changeSelectedCategory: name => dispatch(changeSelectedCategory(name)),
     fetchCategories: () => dispatch(fetchCategories()),
-    filterByCategory: category => dispatch(filterByCategory(category))
   };
 };
 

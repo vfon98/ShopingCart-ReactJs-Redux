@@ -9,8 +9,20 @@ const initialState = {
 
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.PRODUCT_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+
     case types.FETCH_PRODUCTS:
-      initialState.products = action.payload;
+      return {
+        ...state,
+        isLoading: false,
+        products: action.payload
+      };
+      
+    case types.SEARCH_PRODUCTS:
       return {
         ...state,
         isLoading: false,

@@ -1,7 +1,6 @@
 import axios from "../axios/axios.base";
 import { USER_PROFILE } from "../api/endpoints";
 import * as types from "../constants/actionTypes";
-import { deleteCartItem } from "./cart.actions";
 
 export const getUserProfile = token => {
   return dispatch => {

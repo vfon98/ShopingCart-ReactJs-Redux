@@ -16,7 +16,7 @@ class Cart extends Component {
       }
     };
 
-    if (!auth.isLogin && auth.isLogin !== null) {
+    if (!auth.isLogin) {
       return <Redirect to="/login" />;
     }
     const cartItems = cart.cart_detail.map(item => {

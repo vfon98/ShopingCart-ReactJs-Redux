@@ -19,12 +19,6 @@ function App() {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.authReducer);
   useEffect(() => {
-    // dispatch(getCartFromLocalStorage(-1));
-  }, []);
-  useEffect(() => {
-    // if (!userInfo.isLogin) {
-    //   dispatch(checkLogin());
-    // }
     auth.isLogin && dispatch(fetchCart(auth.token));
   }, [auth.isLogin]);
 

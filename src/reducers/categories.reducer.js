@@ -1,6 +1,7 @@
 import * as types from "../constants/actionTypes";
 
 const initialState = {
+  isLoading: true,
   currentSelected: {
     id: -1,
     name: "All"
@@ -13,16 +14,16 @@ const categoriesReducer = (state = initialState, action) => {
     case types.FETCH_CATEGORIES:
       return {
         ...state,
+        isLoading: false,
         categories: [...initialState.categories, ...action.payload]
       };
+
     case types.CHANGE_SELECTED_CATEGORY:
-      let currentSelected = state.categories.find(
-        cate => cate.id === action.payload
-      );
       return {
         ...state,
-        currentSelected: currentSelected
+        currentSelected: action.payload.category
       };
+
     default:
       return state;
   }

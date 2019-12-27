@@ -7,29 +7,31 @@ import {
   searchByCategory
 } from "../../actions/products.actions";
 import { withRouter } from "react-router-dom";
+import EmptyButton from "../../components/EmptyButton";
 
 class Products extends PureComponent {
   componentDidMount() {
     console.log("FETCHING API");
 
     const {
-      match: { params },
-      history
+      match: { params }
     } = this.props;
     this.props.searchByCategory(params.category);
-    if (this.isCategoryNotFound()) {
-      // history.push("/404");
-    }
   }
 
   componentDidUpdate(prevProps) {
     const {
       match: { params },
-      categories
+      categories,
+      history
     } = this.props;
     // Prevent infinite loops
     if (prevProps.categories.currentSelected !== categories.currentSelected) {
       this.props.searchByCategory(params.category);
+    }
+    // Redirect when category not matched
+    if (!categories.isLoading && this.isCategoryNotFound()) {
+      history.push("/404");
     }
   }
 
@@ -38,8 +40,6 @@ class Products extends PureComponent {
       match: { params },
       categories: { categories }
     } = this.props;
-    console.log("CATE", categories, params.category)
-    // Check if is there any category matching
     return !categories.find(category => category.name === params.category);
   };
 
@@ -49,7 +49,7 @@ class Products extends PureComponent {
     const { currentSelected } = this.props.categories;
 
     let productsList = products.map(product => {
-      return <OneProduct {...product} /* userID={userID} */ key={product.id} />;
+      return <OneProduct {...product} key={product.id} />;
     });
 
     return (
@@ -58,7 +58,9 @@ class Products extends PureComponent {
         {isLoading ? (
           <LoadingButton />
         ) : (
-          <div className="row">{productsList}</div>
+          <div className="row">
+            {productsList.length ? productsList : <EmptyButton />}
+          </div>
         )}
       </div>
     );

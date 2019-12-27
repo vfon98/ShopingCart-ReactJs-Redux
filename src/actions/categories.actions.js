@@ -16,9 +16,20 @@ export const fetchCategories = () => {
   };
 };
 
-export const changeSelectedCategory = id => {
-  return {
-    type: types.CHANGE_SELECTED_CATEGORY,
-    payload: id
+export const changeSelectedCategory = categoryName => {
+  return (dispatch, getState) => {
+    let currentSelected = getState().categoriesReducer.categories.find(
+      category => category.name === categoryName
+    );
+    dispatch({
+      type: types.CHANGE_SELECTED_CATEGORY,
+      payload: { category: currentSelected }
+    });
+    // Reset page number to 1 when changing category
+    // Prevent 404 error caused by overflow page number
+    dispatch({
+      type: types.GO_TO_PAGE,
+      payload: { page_number: 1 }
+    });
   };
 };
