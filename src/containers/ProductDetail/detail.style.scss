@@ -1,0 +1,30 @@
+#prod-info {
+  #name {
+    font-weight: 550;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+  #price {
+    font-weight: 550;
+  }
+}
+
+#feeds .feed {
+  min-width: 5rem;
+  border-radius: 2%;
+}
+
+#prod-image {
+  animation: image-on-load 1.5s ease-out;
+}
+
+@keyframes image-on-load {
+  0% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

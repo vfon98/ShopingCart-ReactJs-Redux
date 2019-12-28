@@ -3,7 +3,6 @@ import OneProduct from "../../components/OneProduct";
 import LoadingButton from "../../components/LoadingButton";
 import { connect } from "react-redux";
 import {
-  fetchProducts,
   searchByCategory
 } from "../../actions/products.actions";
 import { withRouter } from "react-router-dom";
@@ -31,7 +30,7 @@ class Products extends PureComponent {
     }
     // Redirect when category not matched
     if (!categories.isLoading && this.isCategoryNotFound()) {
-      history.push("/404");
+      history.replace("/404");
     }
   }
 
@@ -54,7 +53,7 @@ class Products extends PureComponent {
 
     return (
       <div>
-        <h2>Category: {currentSelected.name}</h2>
+        <h2>Category: {currentSelected && currentSelected.name}</h2>
         {isLoading ? (
           <LoadingButton />
         ) : (
@@ -77,7 +76,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchProducts: category => dispatch(fetchProducts(category)),
     searchByCategory: category => dispatch(searchByCategory(category))
   };
 };

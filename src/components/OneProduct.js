@@ -1,9 +1,9 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart, addExistedItem } from "../actions/cart.actions";
-import { useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../actions/cart.actions';
+import { useHistory } from 'react-router-dom';
+import StarRating from './StarRating';
 
 const OneProduct = props => {
   const [hasError, setHasError] = useState(false);
@@ -16,56 +16,52 @@ const OneProduct = props => {
     return cart.cart_detail.find(item => item.product.id === props.id);
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = e => {
+    e.stopPropagation();
     !auth.isLogin && history.push('/login');
-    console.log("PRODUCT ID", props.id);
+    console.log('PRODUCT ID', props.id);
     dispatch(addToCart(auth.token, props.id));
   };
 
-  // Redering rating stars
-  const RatingStars = rating => {
-    // Rounded to nearest 0.5
-    rating = Math.round(rating * 2) / 2;
-    let starIcons = [];
-    for (let i = 0; i < 5; i++) {
-      if (rating >= 1) starIcons.push(<i key={i} className='fa fa-star'></i>);
-      else if (rating === 0.5)
-        starIcons.push(<i key={i} className='fa fa-half-star-o'></i>);
-      else starIcons.push(<i key={i} className='fa fa-star-o'></i>);
-      rating--;
-    }
-    return starIcons;
+  const handleClick = () => {
+    history.push(`/products/${props.id}/detail`);
   };
 
   return (
-    <div className='col-lg-3 col-md-4 col-sm-6 mb-4'>
-      <div className='card card-product shadow'>
+    <div className="col-lg-3 col-md-4 col-sm-6 mb-4">
+      <div className="card card-product shadow" onClick={handleClick}>
         <img
           title={props.name}
           onError={() => setHasError(true)}
-          className='card-img-top img-fluid border-bottom'
+          className="card-img-top img-fluid border-bottom"
           //   src='https://via.placeholder.com/250'
           src={
             !hasError && props.image
               ? props.image
-              : "https://via.placeholder.com/250?text=placeholder"
+              : 'https://via.placeholder.com/250?text=placeholder'
           }
-          alt='Missing image'
+          alt="Missing image"
         />
-        <div className='card-body'>
-          <h5 className='card-text font-weight-bold' id='product-name'>
+        <div className="card-body">
+          <h5
+            className="card-text font-weight-bold"
+            id="product-name"
+            title={props.id}
+          >
             {props.name}
           </h5>
-          <p className='card-text font-weight-bolder text-muted mb-1'>
-            ${props.price.toLocaleString("en-EN")}
+          <p className="card-text font-weight-bolder text-muted mb-1">
+            ${props.price.toLocaleString('en-EN')}
           </p>
-          <p className='card-text mb-1'>
-            {props.category.map(category => category.name).join(", ")}
+          <p className="card-text mb-1">
+            {props.category.map(category => category.name).join(', ')}
           </p>
-          <p>{RatingStars(props.rating)}</p>
-          <button className='btn btn-success' onClick={handleAddToCart}>
+          <p title={props.rating + ' stars'}>
+            <StarRating rating={props.rating} />
+          </p>
+          <button className="btn btn-success" onClick={handleAddToCart}>
             <i
-              className={"fa mr-2 " + (isAdded() ? "fa-check" : "fa-cart-plus")}
+              className={'fa mr-2 ' + (isAdded() ? 'fa-check' : 'fa-cart-plus')}
             ></i>
             Add to cart
           </button>

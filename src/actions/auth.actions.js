@@ -1,6 +1,6 @@
-import { REGISTER, LOGIN, USER_PROFILE, LOGOUT } from "../api/endpoints";
-import axios from "../axios/axios.base";
 import * as types from "../constants/actionTypes";
+import * as UserAPI from "../api/user.api";
+import * as AuthAPI from "../api/auth.api";
 import { getUserProfile } from "./user.actions";
 
 export const authUser = () => {
@@ -9,8 +9,7 @@ export const authUser = () => {
     return { type: types.TOKEN_NOT_FOUND };
   }
   return dispatch => {
-    axios
-      .get(USER_PROFILE, { headers: { Authorization: `JWT ${token}` } })
+    UserAPI.getUserProfile(token)
       .then(res => {
         dispatch({
           type: types.AUTH_USER,
@@ -18,7 +17,7 @@ export const authUser = () => {
         });
       })
       .catch(err => {
-        console.log({err});
+        console.log({ err });
         dispatch({ type: types.TOKEN_EXPIRED });
         removeTokenFromLocalStorage();
       });
@@ -27,8 +26,7 @@ export const authUser = () => {
 
 export const registerAccount = accountInfo => {
   return dispatch => {
-    axios
-      .post(REGISTER, accountInfo)
+    AuthAPI.registerAccount(accountInfo)
       .then(res => {
         dispatch({
           type: types.REGISTER_OK,
@@ -48,14 +46,12 @@ export const registerAccount = accountInfo => {
 
 export const login = (email, password) => {
   return dispatch => {
-    axios
-      .post(LOGIN, { email, password })
+    AuthAPI.login(email, password)
       .then(res => {
         dispatch({
           type: types.LOGIN_OK,
           payload: { token: res.data.token }
         });
-        // axios.defaults.headers.common['Authorization'] = `JWT ${res.data.token}`;
         saveTokenIntoLocalStorage(res.data.token);
         dispatch(getUserProfile(res.data.token));
       })
@@ -70,8 +66,7 @@ export const login = (email, password) => {
 
 export const logout = token => {
   return dispatch => {
-    axios
-      .get(LOGOUT, { headers: { Authorization: `JWT ${token}` } })
+    AuthAPI.logout(token)
       .then(res => {
         removeTokenFromLocalStorage();
         dispatch({

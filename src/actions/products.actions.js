@@ -1,45 +1,13 @@
-import axios from "../axios/axios.base";
-import * as types from "../constants/actionTypes";
-import { PRODUCTS_LIST, SEARCH_CATEGORY } from "../api/endpoints";
-
-// Fetch all products from mock API
-export const fetchProducts = category => {
-  return (dispatch, getState) => {
-    const { pagination } = getState();
-    dispatch({ type: types.PRODUCT_PENDING });
-    axios
-      .get(PRODUCTS_LIST, {
-        params: {
-          page: pagination.currentPage,
-          page_size: pagination.pageSize
-        }
-      })
-      .then(res => {
-        dispatch({
-          type: types.FETCH_PRODUCTS,
-          payload: res.data.results
-        });
-      })
-      .catch(err => console.log(err));
-  };
-};
+import * as types from '../constants/actionTypes';
+import * as ProductAPI from '../api/product.api';
 
 // Search dispatch the same action
 export const searchByCategory = category => {
-  const data = {
-    key_word: "",
-    category: category === "All" ? "" : category
-  };
   return (dispatch, getState) => {
     dispatch({ type: types.PRODUCT_PENDING });
-    const pagination = getState().paginationReducer;
-    axios
-      .post(SEARCH_CATEGORY, data, {
-        params: {
-          page: pagination.currentPage,
-          page_size: pagination.pageSize
-        }
-      })
+
+    const { currentPage, pageSize } = getState().paginationReducer;
+    ProductAPI.searchByCategory(category, currentPage, pageSize)
       .then(res => {
         dispatch({
           type: types.SEARCH_PRODUCTS,
@@ -51,6 +19,18 @@ export const searchByCategory = category => {
           payload: { page: res.data }
         });
       })
-      .catch(err => console.log({err}));
+      .catch(err => console.log({ err }));
+  };
+};
+
+export const detailProduct = id => {
+  return dispatch => {
+    dispatch({ type: types.PRODUCT_PENDING });
+    ProductAPI.detailProduct(id).then(res => {
+      dispatch({
+        type: types.DETAIL_PRODUCT,
+        payload: { details: res.data }
+      });
+    });
   };
 };

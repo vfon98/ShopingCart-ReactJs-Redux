@@ -1,16 +1,27 @@
-export const PRODUCTS_LIST    = '/api/products/list';
-export const CATEGORY_LIST    = '/api/category/list';
+export const category = {
+  CATEGORY_LIST: '/api/category/list'
+};
 
-export const SEARCH_CATEGORY  =  '/api/category/search/?order_by=-id';
+export const product = {
+  SEARCH_CATEGORY: '/api/category/search/?order_by=-id',
+  PRODUCTS_LIST: '/api/products/list',
+  PRODUCT_DETAIL: id => `/api/products/${id}/details`
+};
 
-export const REGISTER         = '/api/auth/register';
-export const LOGIN            = '/user/login';
-export const LOGOUT           = '/user/logout';
-export const USER_PROFILE     = '/api/auth/profile';
+export const auth = {
+  REGISTER: '/api/auth/register',
+  LOGIN: '/user/login',
+  LOGOUT: '/user/logout'
+};
+export const user = {
+  USER_PROFILE: '/api/auth/profile'
+};
 
-export const VIEW_CART        = '/api/user/cart/view-cart';
-export const ADD_TO_CART      = '/api/user/cart/add-to-cart';
-export const UPDATE_CART      = '/api/user/cart/update-cart';
-export const REMOVE_FROM_CART = '/api/user/cart/remove-from-cart';
-export const CLEAR_CART       = '/api/user/cart/clear';
-export const CART_PAYMENT     = '/api/user/cart/payment';
+export const cart = {
+  VIEW_CART: '/api/user/cart/view-cart',
+  ADD_TO_CART: '/api/user/cart/add-to-cart',
+  UPDATE_CART: '/api/user/cart/update-cart',
+  REMOVE_FROM_CART: '/api/user/cart/remove-from-cart',
+  CLEAR_CART: '/api/user/cart/clear',
+  CART_PAYMENT: '/api/user/cart/payment'
+};

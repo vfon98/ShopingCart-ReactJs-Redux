@@ -4,7 +4,13 @@ import * as types from "../constants/actionTypes";
 const initialState = {
   isLoading: true,
   products: [],
-  hasError: false
+  hasError: false,
+  details: {
+    feeds: [],
+    other_products: [],
+    product: [],
+    company: []
+  },
 };
 
 const productsReducer = (state = initialState, action) => {
@@ -28,6 +34,13 @@ const productsReducer = (state = initialState, action) => {
         isLoading: false,
         products: action.payload
       };
+
+    case types.DETAIL_PRODUCT:
+      return {
+        ...state,
+        isLoading: false,
+        details: action.payload.details
+      }
 
     default:
       return state;

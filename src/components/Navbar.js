@@ -19,7 +19,7 @@ const Navbar = props => {
     }
   };
   return (
-    <nav className='navbar navbar-expand-sm bg-dark navbar-dark fixed-top p-2 p-sm-0'>
+    <nav className='navbar navbar-expand-md bg-dark navbar-dark fixed-top p-2 p-md-0'>
       <div className='container-fluid container-lg'>
         <Link className='navbar-brand' to='/'>
           Shopping Now
@@ -35,7 +35,7 @@ const Navbar = props => {
         </button>
 
         <ul
-          className='navbar-nav collapse navbar-collapse d-sm-flex justify-content-sm-end'
+          className='navbar-nav collapse navbar-collapse d-md-flex justify-content-md-end'
           id='collapsibleNavbar'
         >
           <li className='nav-item'>

@@ -1,11 +1,9 @@
 import * as types from "../constants/actionTypes";
-import axios from "../axios/axios.base";
-import { CATEGORY_LIST } from "../api/endpoints";
+import * as CategoryAPI  from "../api/category.api";
 
 export const fetchCategories = () => {
   return dispatch => {
-    axios
-      .get(CATEGORY_LIST)
+    CategoryAPI.fetchCategories()
       .then(res => {
         dispatch({
           type: types.FETCH_CATEGORIES,

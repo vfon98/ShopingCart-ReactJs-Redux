@@ -1,13 +1,5 @@
-import axios from "../axios/axios.base";
-import * as types from "../constants/actionTypes";
-import {
-  VIEW_CART,
-  ADD_TO_CART,
-  UPDATE_CART,
-  REMOVE_FROM_CART,
-  CLEAR_CART,
-  CART_PAYMENT
-} from "../api/endpoints";
+import * as types from '../constants/actionTypes';
+import * as CartAPI from '../api/cart.api';
 
 export const fetchCart = token => {
   return dispatch => {
@@ -18,8 +10,7 @@ export const fetchCart = token => {
     });
 
     getCartFromLocalStorage();
-    axios
-      .get(VIEW_CART, { headers: { Authorization: `JWT ${token}` } })
+    CartAPI.fetchCart(token)
       .then(res => {
         dispatch({
           type: types.FETCH_CART,
@@ -31,14 +22,9 @@ export const fetchCart = token => {
   };
 };
 
-export const addToCart = (token, productID) => {
-  const data = {
-    product: productID,
-    amount: 1
-  };
+export const addToCart = (token, productID, amount = 1) => {
   return dispatch => {
-    axios
-      .post(ADD_TO_CART, data, { headers: { Authorization: `JWT ${token}` } })
+    CartAPI.addToCart(token, productID, amount)
       .then(res => {
         dispatch({
           type: types.ADD_TO_CART,
@@ -50,13 +36,10 @@ export const addToCart = (token, productID) => {
 };
 
 export const udpateCartItem = (token, productID, quantity) => {
-  const data = { product: productID, amount: parseInt(quantity) };
-  console.log(token, data);
   return dispatch => {
-    axios
-      .post(UPDATE_CART, data, { headers: { Authorization: `JWT ${token}` } })
+    CartAPI.updateCartItem(token, productID, quantity)
       .then(res => {
-        console.log("Updated from API");
+        console.log('Updated from API');
         dispatch({
           type: types.UPDATE_CART_ITEM,
           payload: { cart: res.data }
@@ -67,14 +50,10 @@ export const udpateCartItem = (token, productID, quantity) => {
 };
 
 export const deleteCartItem = (token, productID) => {
-  const data = { product: productID };
   return dispatch => {
-    axios
-      .post(REMOVE_FROM_CART, data, {
-        headers: { Authorization: `JWT ${token}` }
-      })
+    CartAPI.deleteCartItem(token, productID)
       .then(res => {
-        console.log("Deleting from API");
+        console.log('Deleting from API');
         dispatch({
           type: types.DELETE_CART_ITEM,
           payload: { cart: res.data }
@@ -86,8 +65,7 @@ export const deleteCartItem = (token, productID) => {
 
 export const clearCart = token => {
   return dispatch => {
-    axios
-      .get(CLEAR_CART, { headers: { Authorization: `JWT ${token}` } })
+    CartAPI.clearCart(token)
       .then(res => {
         dispatch({
           type: types.CLEAR_CART,
@@ -99,11 +77,8 @@ export const clearCart = token => {
 };
 
 export const checkoutCart = (token, stripe_token) => {
-  // 1 mean recurring payment, 2 mean one one-time payment
-  const data = { option: 2, token: stripe_token };
   return async dispatch => {
-    await axios
-      .post(CART_PAYMENT, data, { headers: { Authorization: `JWT ${token}` } })
+    CartAPI.clearCart(token, stripe_token)
       .then(res => {
         dispatch({ type: types.CHECK_OUT_OK });
         return Promise.resolve();
@@ -118,9 +93,9 @@ export const checkoutCart = (token, stripe_token) => {
 
 export const getCartFromLocalStorage = () => {
   // Return [] instead of null
-  return JSON.parse(localStorage.getItem("user-cart")) || [];
+  return JSON.parse(localStorage.getItem('user-cart')) || [];
 };
 
 export const updateCartInLocalStorage = cart => {
-  localStorage.setItem('user-cart', JSON.stringify(cart))
+  localStorage.setItem('user-cart', JSON.stringify(cart));
 };

@@ -13,6 +13,7 @@ import { Elements } from "react-stripe-elements";
 import Checkout from "./containers/Checkout/Checkout";
 import NotFound404 from "./components/NotFound404";
 import { fetchCart } from './actions/cart.actions'
+import ProductDetail from './containers/ProductDetail/ProductDetail';
 
 
 function App() {
@@ -30,7 +31,8 @@ function App() {
           <Redirect exact from='/' to='/products/All' />
           <Redirect exact from='/products' to='/products/All' />
           
-          <Route path='/products/:category' component={Home} />
+          <Route path='/products/:category' exact component={Home} />
+          <Route path='/products/:id/detail' exact component={ProductDetail} />
           <Route path='/login' exact component={LoginForm} />
           <Route path='/signup' exact component={SignupForm} />
           <Route path='/cart' exact component={Cart} />

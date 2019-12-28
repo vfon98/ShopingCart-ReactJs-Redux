@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerAccount } from "../../actions/auth.actions";
-import useInput from "./useInput";
+import useInput from '../../components/useInput';
 
 const SignupForm = props => {
   const [firstName, bindFirstName] = useInput("Phong");
