@@ -32,6 +32,7 @@ export const CHECK_LOGIN = 'CHECK_LOGIN';
 export const LOGOUT = 'LOGOUT';
 
 export const GET_USER_PROFILE = 'GET_USER_PROFILE';
+export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 
 export const CREATE_PAGINATION = 'CREATE_PAGINATION';
 export const NEXT_PAGE = 'NEXT_PAGE';

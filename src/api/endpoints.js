@@ -14,7 +14,8 @@ export const auth = {
   LOGOUT: '/user/logout'
 };
 export const user = {
-  USER_PROFILE: '/api/auth/profile'
+  USER_PROFILE: '/api/auth/profile',
+  UPDATE_PROFILE: '/api/auth/profile',
 };
 
 export const cart = {

@@ -3,18 +3,20 @@ import React from 'react';
 const ProductDescription = props => {
   return (
     <div className="col p-0">
-      <div className="card mt-3">
-        <div className="card-header text-center bg-info p-0">
-          <a
-            href="#description-body"
-            className="text-decoration-none d-block text-white h5 mb-0 p-2"
+      <div className="card mt-3 shadow">
+        <div className="card-header text-center bg-info p-0 overflow-hidden">
+          <button
+            className="btn text-white font-weight-bold btn-block"
+            data-target="#description-body"
             data-toggle="collapse"
           >
             Click to show full description
-          </a>
+          </button>
         </div>
-        <div className="card-body collapse hide" id="description-body">
-          <div dangerouslySetInnerHTML={{ __html: props.description }}></div>
+        <div className="collapse hide overflow-hidden" id="description-body">
+          <div className="card-body">
+            <div dangerouslySetInnerHTML={{ __html: props.description }}></div>
+          </div>
         </div>
       </div>
     </div>

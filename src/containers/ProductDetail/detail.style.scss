@@ -1,19 +1,60 @@
+$orange: #ff5733;
+
+.bg-orange {
+  background-color: $orange;
+}
+
+@mixin line-clamp($line) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+  overflow: hidden;
+}
+
 #prod-info {
   #name {
     font-weight: 550;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
+    @include line-clamp(3);
   }
   #price {
     font-weight: 550;
   }
 }
 
-#feeds .feed {
-  min-width: 5rem;
-  border-radius: 2%;
+#feeds {
+  max-height: 30rem;
+  overflow-y: auto;
+  .feed {
+    min-width: 5rem;
+    max-width: 8rem;
+    margin: 0.5rem 0.2rem 0.1rem;
+    border-radius: 2%;
+  }
+}
+
+#prod-others {
+  overflow-x: auto;
+  padding-top: 0.6rem;
+  .card {
+    margin-right: 0.1rem;
+    min-width: 11rem;
+    max-width: 12rem;
+    padding: 0;
+    transition: all ease-out 0.2s;
+    &:hover {
+      cursor: pointer;
+      transform: translateY(-0.6rem);
+    }
+    img {
+      height: 10rem;
+    }
+    .card-title {
+      @include line-clamp(3);
+    }
+    .card-body {
+      padding-top: .4rem;
+    }
+  }
 }
 
 #prod-image {
@@ -26,5 +67,11 @@
   }
   100% {
     transform: scale(1);
+  }
+}
+
+#company {
+  .social-links .fa {
+    vertical-align: middle;
   }
 }

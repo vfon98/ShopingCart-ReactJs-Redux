@@ -3,9 +3,23 @@ import React, { useState } from 'react';
 
 const ProductImages = props => {
   const [thumbnail, setThumbnail] = useState(props.image);
+
+  const renderFeeds = () => {
+    return props.feeds.map(feed => (
+      <div className="feed border" key={feed.id}>
+        <img
+          src={feed.url}
+          className="img-fluid rounded"
+          alt="Product"
+          onClick={() => setThumbnail(feed.url)}
+        />
+      </div>
+    ));
+  };
+
   return (
     <div className="col-md-4 border overflow-hidden">
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center mt-2 shadow">
         <img
           id="prod-image"
           src={thumbnail}
@@ -13,17 +27,9 @@ const ProductImages = props => {
           alt="Product image"
         />
       </div>
-      <div className="row px-3" id="feeds">
-        {props.feeds.map(feed => (
-          <div className="border col rounded flex-wrap m-1 p-0" key={feed.id}>
-            <img
-              src={feed.url}
-              className="img-fluid rounded feed"
-              alt="Product"
-              onClick={() => setThumbnail(feed.url)}
-            />
-          </div>
-        ))}
+      <hr className="mb-1" />
+      <div className="row px-3 d-flex justify-content-center" id="feeds">
+        {renderFeeds()}
       </div>
     </div>
   );

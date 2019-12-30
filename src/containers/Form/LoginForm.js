@@ -14,7 +14,7 @@ const LoginForm = props => {
   const auth = useSelector(state => state.authReducer);
 
   useEffect(() => {
-    auth.isLogin && props.history.push("/cart");
+    auth.isLogin && props.history.push('/cart');
   }, [auth.isLogin]);
 
   const handleSubmit = e => {

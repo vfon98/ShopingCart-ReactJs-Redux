@@ -1,7 +1,8 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import userImage from "../assets/user.png";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import userImage from '../assets/user.png';
+import { Link } from 'react-router-dom';
 
 const UserInfo = props => {
   const cart = useSelector(state => state.cartReducer);
@@ -9,15 +10,15 @@ const UserInfo = props => {
   const auth = useSelector(state => state.authReducer);
   return (
     <React.Fragment>
-      {!auth.isLogin && <Redirect to='/login' />}
+      {!auth.isLogin && <Redirect to="/login" />}
 
-      <div className='jumbotron'>
-        <div className='row align-items-center'>
-          <div className='col-lg-6 pb-3 text-center'>
-            <img src={userImage} className='img-fluid' alt='User Information' />
+      <div className="jumbotron">
+        <div className="row align-items-center">
+          <div className="col-lg-6 pb-3 text-center">
+            <img src={userImage} className="img-fluid" alt="User Information" />
           </div>
-          <div className='col-lg-6'>
-            <h2 className='text-success font-weight-bold'>User information</h2>
+          <div className="col-lg-6">
+            <h2 className="text-success font-weight-bold">User information</h2>
             <hr />
             <p>
               <b>First name: </b>
@@ -42,6 +43,9 @@ const UserInfo = props => {
             <p>
               <b>Total cart price: </b>${cart.total.toLocaleString('en-EN')}
             </p>
+            <Link to="/update-profile" className="btn btn-lg btn-danger">
+              <i className="fa fa-wrench fa-lg mr-2"></i>Change information
+            </Link>
           </div>
         </div>
       </div>

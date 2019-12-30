@@ -1,12 +1,12 @@
 import React from 'react';
 
 const CompanyInfo = props => {
-  const {company} = props;
+  const { company } = props;
   return (
-    <div className="col-md-3 border pt-2">
+    <div className="col-md-3 border pt-2" id="company">
       <div className="row justify-content-center">
         <img
-          src={company.logo || "https://place-hold.it/100"}
+          src={company.logo || 'https://place-hold.it/100'}
           className="img-fluid img-thumbnail rounded-circle w-75"
           alt=""
         />
@@ -16,7 +16,7 @@ const CompanyInfo = props => {
           <h3 className="text-center">{company.store_name}</h3>
         </dd>
       </dl>
-      <hr/>
+      <hr />
       <dl className="col">
         <dt>Address</dt>
         <dd>{company.address}</dd>
@@ -27,21 +27,25 @@ const CompanyInfo = props => {
       </dl>
       <dl className="col">
         <dt>Products</dt>
-        <dd>{
-          company.productgroup && company.productgroup.map(product => product.name).join(', ')
-        }</dd>
+        <dd>
+          {company.productgroup &&
+            company.productgroup.map(product => product.name).join(', ')}
+        </dd>
       </dl>
       <hr />
-      <div className="row text-center py-2">
-        <div className="col">
+      <div className="social-links">
+        <p>
           <i className="fa fa-2x fa-fw fa-facebook-square text-info"></i>
-        </div>
-        <div className="col">
+          {company.social_link && company.social_link.facebook}
+        </p>
+        <p>
           <i className="fa fa-2x fa-fw fa-instagram text-danger"></i>
-        </div>
-        <div className="col">
+          {company.social_link && company.social_link.instagram}
+        </p>
+        <p>
           <i className="fa fa-2x fa-fw fa-twitter text-primary"></i>
-        </div>
+          {company.social_link && company.social_link.twitter || 'unknown'}
+        </p>
       </div>
     </div>
   );

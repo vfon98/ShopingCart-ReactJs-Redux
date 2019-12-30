@@ -51,7 +51,7 @@ class Cart extends Component {
               <tr>
                 <td>
                   <Link to="/" className="btn btn-warning">
-                    <i className="fa fa-angle-double-left fa-lg mr-1"></i>
+                    <i className="fa fa-chevron-circle-left fa-lg mr-1"></i>
                     Continue Shopping
                   </Link>
                   <button
