@@ -18,6 +18,10 @@ class Products extends PureComponent {
     this.props.searchByCategory(params.category);
   }
 
+  deformatURL = url => {
+    return url.replace(/-/g, ' ');
+  }
+
   componentDidUpdate(prevProps) {
     const {
       match: { params },
@@ -26,7 +30,7 @@ class Products extends PureComponent {
     } = this.props;
     // Prevent infinite loops
     if (prevProps.categories.currentSelected !== categories.currentSelected) {
-      this.props.searchByCategory(params.category);
+      this.props.searchByCategory(this.deformatURL(params.category));
     }
     // Redirect when category not matched
     if (!categories.isLoading && this.isCategoryNotFound()) {
@@ -39,7 +43,7 @@ class Products extends PureComponent {
       match: { params },
       categories: { categories }
     } = this.props;
-    return !categories.find(category => category.name === params.category);
+    return !categories.find(category => category.name === this.deformatURL(params.category));
   };
 
   render() {

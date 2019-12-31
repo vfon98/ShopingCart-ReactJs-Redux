@@ -22,7 +22,7 @@ const ProductImages = props => {
       <div className="d-flex justify-content-center mt-2 shadow">
         <img
           id="prod-image"
-          src={thumbnail}
+          src={thumbnail || 'https://place-hold.it/300'}
           className="img-fluid img-thumbnail"
           alt="Product image"
         />

@@ -1,7 +1,7 @@
-import * as types from "../constants/actionTypes";
-import * as UserAPI from "../api/user.api";
-import * as AuthAPI from "../api/auth.api";
-import { getUserProfile } from "./user.actions";
+import * as types from '../constants/actionTypes';
+import * as UserAPI from '../api/user.api';
+import * as AuthAPI from '../api/auth.api';
+import { getUserProfile } from './user.actions';
 
 export const authUser = () => {
   const token = getTokenFromLocalStorage();
@@ -77,15 +77,36 @@ export const logout = token => {
   };
 };
 
+export const updatePassword = (token, input) => {
+  const body = {
+    old_password: input.oldPassword,
+    new_password: input.newPassword,
+    confirm_password: input.confirmPassword
+  };
+  return dispatch => {
+    AuthAPI.updatePassword(token, body)
+      .then(res => {
+        dispatch({ type: types.UPDATE_PASSWORD_OK });
+      })
+      .catch(err => {
+        console.log({ err });
+        dispatch({
+          type: types.UPDATE_PASSWORD_FAILED,
+          payload: { error: err.response.data }
+        });
+      });
+  };
+};
+
 const removeTokenFromLocalStorage = () => {
-  let token = localStorage.getItem("user-token");
-  token && localStorage.removeItem("user-token");
+  let token = localStorage.getItem('user-token');
+  token && localStorage.removeItem('user-token');
 };
 
 const saveTokenIntoLocalStorage = token => {
-  localStorage.setItem("user-token", token);
+  localStorage.setItem('user-token', token);
 };
 
 export const getTokenFromLocalStorage = () => {
-  return localStorage.getItem("user-token");
+  return localStorage.getItem('user-token');
 };

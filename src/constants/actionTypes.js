@@ -30,6 +30,8 @@ export const LOGIN_OK = 'LOGIN_OK';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const CHECK_LOGIN = 'CHECK_LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const UPDATE_PASSWORD_OK = 'UPDATE_PASSWORD_OK';
+export const UPDATE_PASSWORD_FAILED = 'UPDATE_PASSWORD_FAILED';
 
 export const GET_USER_PROFILE = 'GET_USER_PROFILE';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';

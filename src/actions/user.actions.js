@@ -5,7 +5,6 @@ export const getUserProfile = token => {
   return dispatch => {
     UserAPI.getUserProfile(token)
       .then(res => {
-        console.log('USER', res);
         dispatch({
           type: types.GET_USER_PROFILE,
           payload: { profile: res.data }
@@ -15,18 +14,21 @@ export const getUserProfile = token => {
   };
 };
 
-export const udpateProfile = (token, { firstName, lastName, city }) => {
+export const updateProfile = (token, oldProfile) => {
   const newProfile = {
-    first_name: firstName,
-    last_name: lastName,
-    city
+    first_name: oldProfile.firstName,
+    last_name: oldProfile.lastName,
+    city: oldProfile.city
   };
-  return dispatch => {
-    UserAPI.updateProfile(token, newProfile).then(res => {
-      dispatch({
-        type: types.UPDATE_PROFILE
-      });
-      dispatch(getUserProfile(token));
-    });
+  return async dispatch => {
+    await UserAPI.updateProfile(token, newProfile)
+      .then(res => {
+        dispatch({
+          type: types.UPDATE_PROFILE
+        });
+        dispatch(getUserProfile(token));
+        Promise.resolve(res);
+      })
+      .catch(err => console.log({ err }));
   };
 };

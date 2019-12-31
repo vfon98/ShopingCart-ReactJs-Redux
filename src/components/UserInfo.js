@@ -14,10 +14,10 @@ const UserInfo = props => {
 
       <div className="jumbotron">
         <div className="row align-items-center">
-          <div className="col-lg-6 pb-3 text-center">
+          <div className="col-md-6 pb-3 text-center">
             <img src={userImage} className="img-fluid" alt="User Information" />
           </div>
-          <div className="col-lg-6">
+          <div className="col-md-6">
             <h2 className="text-success font-weight-bold">User information</h2>
             <hr />
             <p>
@@ -43,7 +43,7 @@ const UserInfo = props => {
             <p>
               <b>Total cart price: </b>${cart.total.toLocaleString('en-EN')}
             </p>
-            <Link to="/update-profile" className="btn btn-lg btn-danger">
+            <Link to="/update-user" className="btn btn-lg btn-danger">
               <i className="fa fa-wrench fa-lg mr-2"></i>Change information
             </Link>
           </div>

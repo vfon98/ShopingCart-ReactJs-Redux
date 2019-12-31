@@ -36,15 +36,15 @@ const CompanyInfo = props => {
       <div className="social-links">
         <p>
           <i className="fa fa-2x fa-fw fa-facebook-square text-info"></i>
-          {company.social_link && company.social_link.facebook}
+          {company.social_link.facebook}
         </p>
         <p>
           <i className="fa fa-2x fa-fw fa-instagram text-danger"></i>
-          {company.social_link && company.social_link.instagram}
+          {company.social_link.instagram}
         </p>
         <p>
           <i className="fa fa-2x fa-fw fa-twitter text-primary"></i>
-          {company.social_link && company.social_link.twitter || 'unknown'}
+          {company.social_link.twitter}
         </p>
       </div>
     </div>

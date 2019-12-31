@@ -13,7 +13,7 @@ const OtherProducts = props => {
       >
         <img
           className="card-img-top border-bottom"
-          src={product.image}
+          src={product.image || 'https://place-hold.it/200'}
           alt="Product image"
         />
         <div className="card-body">

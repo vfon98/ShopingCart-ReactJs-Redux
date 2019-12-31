@@ -11,8 +11,10 @@ export const product = {
 export const auth = {
   REGISTER: '/api/auth/register',
   LOGIN: '/user/login',
-  LOGOUT: '/user/logout'
+  LOGOUT: '/user/logout',
+  UPDATE_PASSWORD: '/api/auth/change_pass'
 };
+
 export const user = {
   USER_PROFILE: '/api/auth/profile',
   UPDATE_PROFILE: '/api/auth/profile',

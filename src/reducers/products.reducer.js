@@ -8,8 +8,29 @@ const initialState = {
   details: {
     feeds: [],
     other_products: [],
-    product: [],
-    company: []
+    product: {
+      tag: '',
+      name: '',
+      rating: 0,
+      price: 0,
+      description: '',
+      model: '',
+      category: [],
+      color: '',
+      favorites: 0,
+    },
+    company: {
+      logo: null,
+      store_name: '',
+      address: '',
+      phone_number: '',
+      productgroup: [],
+      social_link: {
+        facebook: '',
+        instagram: '',
+        twitter: '',
+      }
+    }
   },
 };
 

@@ -1,11 +1,14 @@
 import * as types from "../constants/actionTypes";
 
 const initialState = {
+  isAuthPending: false,
+  isPasswordUpdated: false,
   token: null,
   isLogin: null,
   regiterSuccess: null,
   registerError: null,
-  loginError: null
+  loginError: null,
+  passwordError: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -32,6 +35,8 @@ const authReducer = (state = initialState, action) => {
     case types.LOGIN_OK:
       return {
         ...state,
+        isAuthPending: false,
+        isPasswordUpdated: false,
         isLogin: true,
         token: action.payload.token
       };
@@ -44,6 +49,18 @@ const authReducer = (state = initialState, action) => {
 
     case types.LOGOUT:
       return { ...initialState };
+    
+    case types.UPDATE_PASSWORD_OK:
+      return {
+        ...state,
+        isPasswordUpdated: true
+      }
+
+    case types.UPDATE_PASSWORD_FAILED:
+      return {
+        ...state,
+        passwordError: action.payload.error
+      }
 
     case types.TOKEN_EXPIRED:
       return { ...initialState };

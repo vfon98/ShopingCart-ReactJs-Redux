@@ -25,6 +25,8 @@ class Categories extends PureComponent {
     const { categories } = this.props.categories;
     const currentCategory = this.props.match.params.category;
 
+    const formatURL = url => url.replace(/\s/g, '-');
+
     const categoriesList = categories.map(category => {
       const { id, name } = category;
       return (
@@ -34,7 +36,7 @@ class Categories extends PureComponent {
               // Check active link
               currentCategory === name ? "nav-link active" : "nav-link border"
             }
-            to={`/products/${name}`}
+            to={`/products/${formatURL(name)}`}
             onClick={() => this.props.changeSelectedCategory(name)}
           >
             {name}

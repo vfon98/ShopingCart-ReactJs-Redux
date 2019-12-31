@@ -18,24 +18,21 @@ const ProductInfo = props => {
 
   const handleBuyNow = () => {
     checkLogin();
-    dispatch(addToCart(auth.token, product.id));
+    dispatch(addToCart(auth.token, product.id, quantity));
     history.push('/cart');
   };
 
   const handleAddToCart = () => {
     checkLogin();
-    dispatch(addToCart(auth.token, product.id));
+    dispatch(addToCart(auth.token, product.id, quantity));
   };
 
   const renderTags = () => {
-    return (
-      product.tag &&
-      product.tag.split(',').map((tag, index) => (
-        <span key={index} className="badge badge-pill badge-success mr-1">
-          {tag}
-        </span>
-      ))
-    );
+    return product.tag.split(',').map((tag, index) => (
+      <span key={index} className="badge badge-pill badge-success mr-1">
+        {tag}
+      </span>
+    ));
   };
 
   return (
@@ -45,7 +42,7 @@ const ProductInfo = props => {
       <div>Tag: {renderTags()}</div>
       <hr />
       <div className="text-warning h2" id="price">
-        US ${product.price && product.price.toLocaleString('en-EN')}
+        US ${product.price.toLocaleString('en-EN')}
       </div>
       <dl>
         <dt>Description</dt>
@@ -58,10 +55,7 @@ const ProductInfo = props => {
         </dl>
         <dl>
           <dt>Category</dt>
-          <dd>
-            {product.category &&
-              product.category.map(cate => cate.name).join(', ')}
-          </dd>
+          <dd>{product.category.map(cate => cate.name).join(', ')}</dd>
         </dl>
         <dl>
           <dt>Color</dt>

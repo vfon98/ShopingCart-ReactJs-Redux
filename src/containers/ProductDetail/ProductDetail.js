@@ -35,8 +35,8 @@ export class ProductDetail extends Component {
       <React.Fragment>
         <button
           type="button"
-          class="btn btn-link"
-          onClick={() => this.props.history.goBack()}
+          className="btn btn-link"
+          onClick={() => this.props.history.push('/products')}
         >
           <i className="fa fa-chevron-left fa-lg mr-2"></i>Back
         </button>

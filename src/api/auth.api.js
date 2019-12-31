@@ -1,5 +1,5 @@
-import { auth } from "./endpoints";
-import axios from "../axios/axios.base";
+import { auth } from './endpoints';
+import axios from '../axios/axios.base';
 
 export const registerAccount = accountInfo => {
   return axios.post(auth.REGISTER, accountInfo);
@@ -12,4 +12,10 @@ export const login = (email, password) => {
 
 export const logout = token => {
   return axios.get(auth.LOGOUT, { headers: { Authorization: `JWT ${token}` } });
+};
+
+export const updatePassword = (token, body) => {
+  return axios.put(auth.UPDATE_PASSWORD, body, {
+    headers: { Authorization: `JWT ${token}` }
+  });
 };

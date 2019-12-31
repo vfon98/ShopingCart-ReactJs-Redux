@@ -14,7 +14,7 @@ import Checkout from "./containers/Checkout/Checkout";
 import NotFound404 from "./components/NotFound404";
 import { fetchCart } from './actions/cart.actions'
 import ProductDetail from './containers/ProductDetail/ProductDetail';
-import UpdateProfile from './containers/Form/UpdateProfile';
+import UpdateUser from './containers/Form/UpdateUser/UpdateUser';
 
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
           <Route path='/signup' exact component={SignupForm} />
           <Route path='/cart' exact component={Cart} />
           <Route path='/user' exact component={UserInfo} />
-          <Route path='/update-profile' exact component={UpdateProfile} />
+          <Route path='/update-user' exact component={UpdateUser} />
           <Route path='/checkout' exact>
             {/* Stripe checkout wrapper */}
             <Elements>
