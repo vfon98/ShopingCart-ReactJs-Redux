@@ -24,6 +24,7 @@ export const fetchCart = token => {
 
 export const addToCart = (token, productID, amount = 1) => {
   return dispatch => {
+    dispatch({ type: types.CART_PENDING });
     CartAPI.addToCart(token, productID, amount)
       .then(res => {
         dispatch({
@@ -37,6 +38,7 @@ export const addToCart = (token, productID, amount = 1) => {
 
 export const udpateCartItem = (token, productID, quantity) => {
   return dispatch => {
+    dispatch({ type: types.CART_PENDING })
     CartAPI.updateCartItem(token, productID, quantity)
       .then(res => {
         console.log('Updated from API');
@@ -51,6 +53,7 @@ export const udpateCartItem = (token, productID, quantity) => {
 
 export const deleteCartItem = (token, productID) => {
   return dispatch => {
+    dispatch({ type: types.CART_PENDING })
     CartAPI.deleteCartItem(token, productID)
       .then(res => {
         console.log('Deleting from API');
@@ -65,6 +68,7 @@ export const deleteCartItem = (token, productID) => {
 
 export const clearCart = token => {
   return dispatch => {
+    dispatch({ type: types.CART_PENDING })
     CartAPI.clearCart(token)
       .then(res => {
         dispatch({

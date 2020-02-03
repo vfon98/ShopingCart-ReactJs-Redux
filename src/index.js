@@ -11,6 +11,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { StripeProvider } from "react-stripe-elements";
 import { updateCartInLocalStorage } from './actions/cart.actions'
 import { authUser } from "./actions/auth.actions";
+import { initializeFirebase } from './firebase/firebase'
 
 // eslint-disable-next-line no-unused-vars
 const PERSONAL_STRIPE_KEY = 'pk_test_QOOyeVrCYofsYsT36rGSO9Ij00IaJ3SQYt';
@@ -26,6 +27,8 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
+initializeFirebase();
+
 store.dispatch(authUser());
 store.subscribe(() => {
   const userCart =(store.getState().cartReducer);
@@ -38,4 +41,4 @@ store.subscribe(() => {
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.register();

@@ -1,8 +1,13 @@
-import axios from "axios";
+import axios from 'axios';
 
+const { hostname } = window.location;
+const baseURL = 'http://api.seekproduct.com';
 const instance = axios.create({
-  // baseURL: `https://5cd831770cc5100014f1e40b.mockapi.io/`,
-  baseURL: `http://api.seekproduct.com`
+  // Use proxy server to avoid CORS
+  baseURL:
+    hostname === 'localhost'
+      ? baseURL
+      : `https://cors-anywhere.herokuapp.com/${baseURL}`
 });
 
 export default instance;

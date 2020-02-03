@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../actions/cart.actions';
 import { useHistory } from 'react-router-dom';
 import StarRating from './StarRating';
+import { Col } from 'reactstrap';
 
 const OneProduct = props => {
   const [hasError, setHasError] = useState(false);
@@ -19,7 +20,6 @@ const OneProduct = props => {
   const handleAddToCart = e => {
     e.stopPropagation();
     !auth.isLogin && history.push('/login');
-    console.log('PRODUCT ID', props.id);
     dispatch(addToCart(auth.token, props.id));
   };
 
@@ -28,7 +28,7 @@ const OneProduct = props => {
   };
 
   return (
-    <div className="col-lg-3 col-md-4 col-sm-6 mb-4">
+    <Col md="3" sm="4" xs="6" className="mb-4">
       <div className="card card-product shadow" onClick={handleClick}>
         <img
           title={props.name}
@@ -67,7 +67,7 @@ const OneProduct = props => {
           </button>
         </div>
       </div>
-    </div>
+    </Col>
   );
 };
 

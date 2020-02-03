@@ -1,6 +1,7 @@
 {
   "name": "shopping-cart-react",
   "version": "0.1.0",
+  "homepage": "https://vfon98.github.io/ShoppingCart-ReactJs-Redux",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -8,6 +9,8 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
+    "firebase": "^7.6.2",
+    "gh-pages": "^2.2.0",
     "jquery": "^3.4.1",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
@@ -16,15 +19,19 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "react-stripe-elements": "^6.0.1",
+    "reactstrap": "^8.2.0",
     "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "toastr": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
   },
+  "proxy": "http://localhost:4200",
   "eslintConfig": {
     "extends": "react-app"
   },

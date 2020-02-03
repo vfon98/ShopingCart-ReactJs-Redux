@@ -5,6 +5,7 @@ $background-color: #fff;
 
 body {
   margin: 0;
+  user-select: none;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -101,4 +102,13 @@ code {
 .error-input {
   color: $danger;
   font-size: 0.8rem;
+}
+
+.popover {
+  max-width: 500px;
+  .popover-inner .popover-body {
+    width: 300px;
+    max-height: 26rem;
+    overflow: auto;
+  }
 }

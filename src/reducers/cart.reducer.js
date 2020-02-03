@@ -1,6 +1,7 @@
 import * as types from "../constants/actionTypes";
 
 const inintialState = {
+  isPending: false,
   id: null,
   total: 0,
   status: null,
@@ -11,33 +12,44 @@ const inintialState = {
 
 const cartReducer = (state = inintialState, action) => {
   switch (action.type) {
+    case types.CART_PENDING:
+      return {
+        ...state,
+        isPending: true
+      }
+
     case types.FETCH_CART:
       return {
         ...state,
+        isPending: false,
         ...action.payload.cart
       };
 
     case types.ADD_TO_CART:
       return {
         ...state,
+        isPending: false,
         ...action.payload.cart
       };
 
     case types.UPDATE_CART_ITEM:
       return {
         ...state,
+        isPending: false,
         ...action.payload.cart
       };
 
     case types.DELETE_CART_ITEM:
       return {
         ...state,
+        isPending: false,
         ...action.payload.cart
       };
 
     case types.CLEAR_CART:
       return {
         ...state,
+        isPending: false,
         ...action.payload.cart
       };
 
